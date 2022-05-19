@@ -20,22 +20,8 @@ const Routes = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen 
-        name="SearchMedicine"
-        component={SearchMedicine}
-        options={{
-          headerShown:false
-        }}
-      />
-      <Stack.Screen 
         name="Apresentation"
         component={Apresentation}
-        options={{
-          headerShown:false
-        }}
-      />
-      <Stack.Screen 
-        name="Login"
-        component={Login}
         options={{
           headerShown:false
         }}
@@ -47,6 +33,22 @@ const Routes = () => {
           headerShown:false
         }}
       />
+      <Stack.Screen 
+        name="SearchMedicine"
+        component={SearchMedicine}
+        options={{
+          headerShown:false
+        }}
+      />
+      
+      <Stack.Screen 
+        name="Login"
+        component={Login}
+        options={{
+          headerShown:false
+        }}
+      />
+      
       <Stack.Screen 
         name="HealthCenter"
         component={HealthCenter}
