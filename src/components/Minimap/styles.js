@@ -1,16 +1,11 @@
 import styled from "styled-components/native";
 
 export const Container = styled.View`
-  flex: 1;
-`;
-
-export const Text = styled.Text`
-  font-size: 18px;
-  text-align: center;
-  margin-top: 10px;
+  width: 100%;
+  height: 190px;
 `
 
-export const Backbutton = styled.TouchableOpacity`
+export const ZoomButton = styled.TouchableOpacity`
   background-color: #AAA4A4;
   position: absolute;
   z-index: 1;
@@ -20,5 +15,5 @@ export const Backbutton = styled.TouchableOpacity`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 15px 0px 0px 10px;
+  margin: ${props => `140px 0px 30px ${props.width*0.85}px`};
 `
