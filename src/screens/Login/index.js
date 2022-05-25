@@ -1,13 +1,62 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
+import DefaultButton from '../../components/DefaultButton'
+import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 import {
   Container,
+  Overlay,
+  Input,
+  Logo,
+  SignupButton,
   Text,
+  Background,
 } from './styles'
 
 const Login = () => {
+  const [emailState, setEmailState] = useState('')
+  const [passwordState, setPasswordState] = useState('')
+
+  const navigation = useNavigation()
+
+  const handleSubmit = () => {
+    if(emailState.trim() != '' && passwordState.trim() != '') {
+      navigation.navigate("Home")
+
+    }else {
+      Toast.show({
+        type: 'error',
+        text1: 'Temos um problema !',
+        text2: 'Você deve preencher todos os campos'
+      });
+    }
+  }
+
   return (
     <Container>
-      <Text>Login Screen</Text>
+      <Overlay>
+        <Logo
+          source={require('./../../assets/logo.png')}
+          resizeMode="contain"
+        />
+        <Input
+          placeholder="Digite seu email"
+          placeholderTextColor={"#6C6868"}
+          onChangeText={(text) => setEmailState(text)}
+        />
+        <Input
+          placeholder="Digite sua senha"
+          secureTextEntry={true}
+          placeholderTextColor={"#6C6868"}
+          onChangeText={(password) => setPasswordState(password)}
+        />
+        <DefaultButton name="Logar" action={handleSubmit} />
+        <SignupButton activeOpacity={0.7} onPress={() => navigation.navigate("Signup")}>
+          <Text fs={"12px"}>Deseja criar uma conta ?</Text>
+        </SignupButton>
+      </Overlay>
+      <Background
+        source={require('../../assets/background.png')}
+      />
     </Container>
   )
 }
