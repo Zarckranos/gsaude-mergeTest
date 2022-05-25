@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Dimensions } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'
 
 import {
@@ -13,17 +13,14 @@ const { width, height } = Dimensions.get('screen')
 
 
 const Fullmap = () => {
-  const [region, setRegion] = useState({
-    latitude: -3.7279078677807744,
-    longitude: -38.49296161327175,
-  })
+  const route = useRoute()
   const navigation = useNavigation()
 
   let data = {
     key: 123,
     coords: {
-      latitude: region.latitude,
-      longitude: region.longitude,
+      latitude: route.params?.latitude,
+      longitude: route.params?.longitude,
     }
   }
 
@@ -34,8 +31,8 @@ const Fullmap = () => {
       </Backbutton>
       <MapView
         region={{
-          latitude: region.latitude,
-          longitude: region.longitude,
+          latitude: route.params?.latitude,
+          longitude: route.params?.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
