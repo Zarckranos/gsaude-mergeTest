@@ -19,9 +19,34 @@ export const Overlay = styled.View`
   left:0;
   z-index:2;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:20px;
+`
+
+export const NotificationButton = styled.TouchableOpacity`
+  display: flex;
+  align-self: flex-start;
+  justify-content: flex-start;
+  z-index: 3;
+  padding: 3px 0px 0px 5px;
+  background-color: #AAA4A4;
+  width: 40px;
+  height: 40px;
+  border-radius: 19px;
+`
+
+export const Badge = styled.View`
+  background-color: red;
+  width: 15px;
+  height: 15px;
   justify-content: center;
   align-items: center;
-  padding:20px;
+  border-radius: 10px;
+  position: absolute;
+  z-index: 1;
+  margin-left: 20px;
+  margin-top: 5px;
 `
 
 export const Input = styled.TextInput`
@@ -31,6 +56,14 @@ export const Input = styled.TextInput`
   border-radius: 6px;
   padding-left: 18px;
   margin-bottom: 10px;
+`
+
+export const Wrapper = styled.View`
+  display: flex;
+  align-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 50px;
 `
 
 export const Logo = styled.Image`
@@ -55,7 +88,6 @@ export const LoginButton = styled.TouchableOpacity`
   align-items: center;
   height: 57px;
   border-radius: 10px;
-  /* margin-bottom: 20px; */
 `
 export const SignupButton = styled.TouchableOpacity`
   padding: 20px;
@@ -65,6 +97,5 @@ export const SignupButton = styled.TouchableOpacity`
 `
 
 export const Background = styled.ImageBackground`
-flex:1;
-
+  flex:1;
 `

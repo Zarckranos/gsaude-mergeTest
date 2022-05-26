@@ -5,7 +5,7 @@ export const Container = styled.View`
   background-color: ${props => props.backgroundColor};
   border: 1px solid;
   border-color: ${props => props.borderColor};
-  padding: 5px;
+  padding: 3px;
   margin-top: 5px;
   border-radius: 5px;
   display: flex;
@@ -13,7 +13,7 @@ export const Container = styled.View`
 `;
 
 export const Text = styled.Text`
-  font-size: 15px;
+  font-size: 12px;
   font-weight: bold;
   color: ${props => props.color};
   text-align: center;
