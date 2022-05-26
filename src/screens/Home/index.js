@@ -2,9 +2,9 @@ import React, { useState, useRef } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import SelectDropdown from 'react-native-select-dropdown'
 import DefaultButton from '../../components/DefaultButton'
-import { useNavigation } from '@react-navigation/native';
-import Toast from 'react-native-toast-message';
-import NotificationsModal from '../../components/Modals/NotificationsModal';
+import { useNavigation } from '@react-navigation/native'
+import Toast from 'react-native-toast-message'
+import NotificationsModal from '../../components/Modals/NotificationsModal'
 
 import {
   Container,

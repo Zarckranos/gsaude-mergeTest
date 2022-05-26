@@ -7,7 +7,7 @@ export const Container = styled.ScrollView`
 
 export const Image = styled.ImageBackground`
   width: 100%;
-  height: 250px;
+  height: 240px;
 `
 export const BackButton = styled.TouchableOpacity`
   justify-content: center;
@@ -23,7 +23,7 @@ export const Body = styled.View`
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   background-color: #fff;
-  margin-top: -35px;
+  margin-top: -48px;
   flex:1;
   justify-content: center;
   padding:0px 10px 0px 10px;

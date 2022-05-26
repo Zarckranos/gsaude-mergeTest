@@ -3,6 +3,7 @@ import { Feather, Ionicons } from '@expo/vector-icons'
 import { Dimensions } from 'react-native'
 import Minimap from '../../components/Minimap/index'
 import MedicineItem from '../../components/MedicineItem'
+import { useNavigation } from '@react-navigation/native'
 
 import {
   Container,
@@ -20,6 +21,8 @@ import {
 const { width } = Dimensions.get('screen')
 
 const HealthCenter = () => {
+  const navigation = useNavigation()
+
   const medicines = [
     {
       name:'Paracetamol',
@@ -48,6 +51,7 @@ const HealthCenter = () => {
     <Container>
       <Image 
         source={{uri:'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fdiariodonordeste.verdesmares.com.br%2Fpolopoly_fs%2F1.1482114!%2Fimage%2Fimage.jpg&f=1&nofb=1'}}
+        resizeMode="cover"
       >
         <BackButton onPress={() => navigation.goBack()}>
           <Feather name="arrow-left" size={30} color={"#fff"} />
@@ -74,8 +78,8 @@ const HealthCenter = () => {
         </StyleMinimap>
         <Section>Lista de remédios</Section>
         {
-          medicines.map((element) => (
-            <MedicineItem data={element}/>
+          medicines.map((element, index) => (
+            <MedicineItem key={index} data={element}/>
           ))
         }
       </Body>

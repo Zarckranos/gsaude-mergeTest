@@ -11,7 +11,7 @@ import {
   Text
 } from './styles'
 
-function chooseBadge (situation, availableQuantity,date){
+function chooseBadge (situation, availableQuantity, date) {
   switch(situation){
     case "available" :
       return (
@@ -25,10 +25,6 @@ function chooseBadge (situation, availableQuantity,date){
       return (
         <Badge name={`Chega dia ${date}`} type="coming"/>
       )
-    default :
-      return (
-        <Title>as</Title>
-      )
   }
 }
 
@@ -41,11 +37,11 @@ const MedicineItem = ({ data }) => {
         {chooseBadge(situation, availableQuantity, date)}
       </Box>
       <Footer>
-        <Buttons>
+        <Buttons activeOpacity={0.7}>
          <Ionicons name="document" size={25} color={"#767373"}/>
          <Text>Ler a bula</Text>
         </Buttons>
-        <Buttons>
+        <Buttons activeOpacity={0.7}>
          <Ionicons name="create" size={30} color={"#767373"}/>
          <Text>Editar</Text>
         </Buttons>

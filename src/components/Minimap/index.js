@@ -34,7 +34,7 @@ const Minimap = ({ data }) => {
       >
         <Marker coordinate={{latitude,longitude}}/>
       </MapView>
-      <ZoomButton activeOpacity={0.7} width={width} onPress={() => navigation.navigate('Fullmap')}>
+      <ZoomButton activeOpacity={0.7} width={width} onPress={() => navigation.navigate('Fullmap',{latitude,longitude})}>
           <Ionicons name="scan" size={30} color="#fff"/>
         </ZoomButton>
     </Container>
