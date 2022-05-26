@@ -13,6 +13,7 @@ import NewMedicine from '../screens/NewMedicine'
 import Dashboard from '../screens/Dashboard'
 import SearchMedicine from '../screens/SearchMedicine'
 import ListMedicine from '../screens/ListMedicine'
+import PDFView from '../screens/PDFView'
 
 const Stack = createNativeStackNavigator()
 
@@ -103,6 +104,13 @@ const Routes = () => {
         component={ListMedicine}
         options={{
           headerShown:false
+        }}
+      />
+      <Stack.Screen 
+        name="PDFView"
+        component={PDFView}
+        options={{
+          title:'Bula'
         }}
       />
       
