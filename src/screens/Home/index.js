@@ -103,7 +103,7 @@ const Home = () => {
             <LoginButton activeOpacity={0.7} onPress={() => navigation.navigate("Login")}>
               <Text fs={"18px"}>Login</Text>
             </LoginButton>
-            <SignupButton activeOpacity={0.7} onPress={() => navigation.navigate("Signup")}>
+            <SignupButton activeOpacity={0.7} onPress={() => navigation.navigate("Otp")}>
               <Text fs={"12px"}>Deseja criar uma conta ?</Text>
             </SignupButton>
           </Wrapper>
