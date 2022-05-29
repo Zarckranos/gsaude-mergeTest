@@ -13,6 +13,7 @@ import NewMedicine from '../screens/NewMedicine'
 import Dashboard from '../screens/Dashboard'
 import SearchMedicine from '../screens/SearchMedicine'
 import ListMedicine from '../screens/ListMedicine'
+import ListHealthCenter from '../screens/ListHealthCenter'
 
 const Stack = createNativeStackNavigator()
 
@@ -101,6 +102,13 @@ const Routes = () => {
       <Stack.Screen 
         name="ListMedicine"
         component={ListMedicine}
+        options={{
+          headerShown:false
+        }}
+      />
+      <Stack.Screen 
+        name="ListHealthCenter"
+        component={ListHealthCenter}
         options={{
           headerShown:false
         }}
