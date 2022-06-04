@@ -78,10 +78,42 @@ export const InputText = styled.TextInput`
   margin-bottom: 10px;
 `
 
+// register screen
 export const TextLeft = styled(Text)`
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  margin-top: 0px;
 `
 export const TitleLeft = styled(TitleStrong)`
   width:100%;
+  margin-bottom: 0px;
+`
+export const DateButton = styled.TouchableOpacity`
+  width: 100%;
+  height: 51px;
+  background-color: #F5F0F0;
+  border-radius: 6px;
+  padding-left: 18px;
+  margin-bottom: 10px;
+  justify-content: center;
+`
+export const TextDate = styled.Text`
+  font-size: 16px;
+  color: ${props => props.color};
+`
+export const Password = styled.View`
+  width: 100%;
+  height: 51px;
+  flex-direction:row;
+  background-color: #F5F0F0;
+  border-radius: 6px;
+  margin-bottom: 10px;
+`
+export const PassButton = styled.TouchableOpacity`
+  margin-right: 50px;
+  margin-top: 10px;
+  align-items: flex-end;
+`
+export const InputPassword = styled(InputText)`
+  width: 85%;
 `
