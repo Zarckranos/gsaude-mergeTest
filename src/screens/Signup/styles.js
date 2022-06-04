@@ -77,3 +77,11 @@ export const InputText = styled.TextInput`
   padding-left: 18px;
   margin-bottom: 10px;
 `
+
+export const TextLeft = styled(Text)`
+  text-align: left;
+  margin-bottom: 20px;
+`
+export const TitleLeft = styled(TitleStrong)`
+  width:100%;
+`
