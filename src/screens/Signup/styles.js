@@ -49,3 +49,31 @@ export const Input = styled.TextInput`
 export const TextGray = styled.Text`
   color: #4F4E4E;
 `
+
+
+// signup screen
+export const ContainerSignup = styled.View`
+  flex: 1;
+  align-items: flex-start;
+  background-color: #fff;
+`
+export const Body = styled.View`
+  flex: 1;
+  background-color: #fff;
+  width: 100%;
+  padding: 20px;
+`
+export const TitleStrong = styled.Text`
+  font-weight: bold;
+  font-size: 30px;
+  width: 220px;
+  margin: 30px 0px 30px 0px;
+`
+export const InputText = styled.TextInput`
+  width: 100%;
+  height: 51px;
+  background-color: #F5F0F0;
+  border-radius: 6px;
+  padding-left: 18px;
+  margin-bottom: 10px;
+`
