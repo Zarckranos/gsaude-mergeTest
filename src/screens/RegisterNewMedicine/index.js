@@ -16,6 +16,7 @@ const RegisterNewMedicine = () => {
             <Container>
                 <NewMedicineTextInput 
                     placeholder="Nome do medicamento"
+                    placeholderTextColor="#BFBCBC"
                 />
                 <Text>Quantidade disponível</Text>
                 <Counter/>

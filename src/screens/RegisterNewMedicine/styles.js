@@ -14,16 +14,19 @@ export const Container = styled.View`
 
 export const NewMedicineTextInput = styled.TextInput`
   height: 50px;
-  background-color: #D3D3D3;
+  background-color: #F5F0F0;
   padding: 10px;
   width: 100%;
   align-self: center;
   border-radius: 10px;
+  font-size: 17px;
+  font-weight: bold;
 `
 
 export const Text = styled.Text`
   font-size: 18px;
   text-align: center;
   margin-top: 30px;
-  color: #D3D3D3;
+  color: #BFBCBC;
+  font-weight: bold;
 `
