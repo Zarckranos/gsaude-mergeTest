@@ -1,6 +1,7 @@
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import Badge from '../Badget'
+import { useNavigation } from '@react-navigation/native'
 
 import {
   Container,
@@ -30,6 +31,8 @@ function chooseBadge (situation, availableQuantity, date) {
 
 const MedicineItem = ({ data }) => {
   const { name, availableQuantity, medicineLeaflet, situation, date } = data
+  const navigation = useNavigation()
+
   return (
     <Container>
       <Box>
@@ -37,7 +40,7 @@ const MedicineItem = ({ data }) => {
         {chooseBadge(situation, availableQuantity, date)}
       </Box>
       <Footer>
-        <Buttons activeOpacity={0.7}>
+        <Buttons activeOpacity={0.7} onPress={() => navigation.navigate("PDFView", {medicine:name})}>
          <Ionicons name="document" size={25} color={"#767373"}/>
          <Text>Ler a bula</Text>
         </Buttons>
