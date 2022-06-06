@@ -3,14 +3,25 @@ import Header from '../../components/Header'
 import {
   Container,
   Text,
+  NewMedicineTextInput,
+  HeaderContainer
 } from './styles'
 
+import Counter from '../../components/Counter'
+import DefaultButton from '../../components/DefaultButton'
 const RegisterNewMedicine = () => {
     return (
-        <Container>
-            <Header/>
-            <Text>Cadastro novo remédio</Text>
-        </Container>
+        <HeaderContainer>
+            <Header title="Cadastrar novo remédio"/>
+            <Container>
+                <NewMedicineTextInput 
+                    placeholder="Nome do medicamento"
+                />
+                <Text>Quantidade disponível</Text>
+                <Counter/>
+                <DefaultButton  name="Salvar"/>
+            </Container>
+        </HeaderContainer>
     )
 }
 
