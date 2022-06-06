@@ -28,15 +28,15 @@ const Counter = () => {
 
     return (
         <Container>
-            <IncreaseButton onPress={() => {increaseQuantity()}}>
-                <AntDesign name="pluscircle" size={40} color="#42B448"/>
-            </IncreaseButton>
-            <QuantityTextInput  onChange={handleChange} value={quantity.toString()}/>
             <DecreaseButton
                 onPress={() => {decreaseQuantity()}}
             >
                 <AntDesign name="minuscircle" size={40} color="#42B448"/>
             </DecreaseButton>
+            <QuantityTextInput  onChange={handleChange} value={quantity.toString()}/>
+            <IncreaseButton onPress={() => {increaseQuantity()}}>
+                <AntDesign name="pluscircle" size={40} color="#42B448"/>
+            </IncreaseButton>
         </Container>
     )
 }

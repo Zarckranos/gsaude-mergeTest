@@ -27,11 +27,12 @@ export const DecreaseButton = styled.TouchableOpacity`
 export const QuantityTextInput = styled.TextInput`
   height: 100px;
   width: 100px;
-  background-color: #FFFFFF;
+  background-color: #D3D3D3;
   padding: 10px;
   align-self: center;
   border-radius: 30px;
   margin-horizontal: 15px;
   font-size: 30px;
   text-align: center;
+  font-weight: bold;
 `
