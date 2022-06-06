@@ -1,21 +1,16 @@
 import React from "react";
 import { Feather, Entypo } from "@expo/vector-icons";
-import { TextInput, View, Keyboard, Text } from "react-native";
-import styles from './styles'
-import { Button } from "./styles";
+import {Container, SearchBarView, SearchInput } from "./styles";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
+
+
+
 
 const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placeholderPhrase}) => {
     return (
-      <View style={styles.container}>
-          <View style={clicked ? styles.searchBar__clicked : styles.searchBar__unclicked}>
-              <Feather
-                name="search"
-                size={20}
-                color="black"
-                style={{ marginLeft: 1 }}
-              />
-              <TextInput
-                style={styles.input}
+      <Container>
+          <SearchBarView>
+              <SearchInput
                 placeholder={placeholderPhrase}
                 value={searchPhrase}
                 onChangeText={setSearchPhrase}
@@ -27,7 +22,7 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placehol
                   <Entypo 
                     name="cross" 
                     size={20}
-                    color="black"
+                    color="#929090"
                     style={{ padding: 1 }}
                     onPress={() => {
                         setSearchPhrase("");
@@ -35,21 +30,16 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placehol
                     }}
                   />
               )}
-          </View>
-          {clicked && (
-              <View style={styles.buttonView}>
-                  <Button 
-                    onPress={() => {
-                        Keyboard.dismiss();
-                        setClicked(false);
-                        setSearchPhrase("");
-                    }}
-                  >
-                      <Text style={styles.cancelText}>Cancel</Text>
-                  </Button>
-              </View>
-          )}
-      </View>
+              {!clicked && (
+                  <Feather
+                    name="search"
+                    size={20}
+                    color="#929090"
+                    style={{ marginRight: 1 }}
+                  />
+              )}
+          </SearchBarView>
+      </Container>
     );
 };
 

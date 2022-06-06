@@ -1,17 +1,19 @@
 import React, {useState, useEffect} from 'react'
-import Header from '../../components/Header'
 import { FontAwesome } from "@expo/vector-icons";
 import SearchBar from '../../components/SearchBar'
 import ListItem from '../../components/ListItem';
-import { useRoute } from '@react-navigation/native';
-import { Container, Text } from './styles'
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { Container, EmptySearch, EmptySearchText, ResultsText, ListContainer, BackButton, Header} from './styles'
 import styles from './styles';
 import { View, FlatList } from "react-native";
-import jsonData from './fakeHealthCenterData.json'
+import jsonData from './fakeHealthCenterData.json';
 import { ZoomButton } from '../../components/Minimap/styles';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 
 const ListHealthCenter = () => {
     const route = useRoute()
+    const navigation = useNavigation()
     const [searchPhrase, setSearchPhrase] = useState(route.params.healthCenter);
     const [clicked, setClicked] = useState(true);
     const [notFound, setNotFound] = useState(false);
@@ -24,36 +26,50 @@ const ListHealthCenter = () => {
 
     const handleEmpty = () => {
         return (
-            <View style={{flex:1, alignItems:'center', justifyContent:'center', alignSelf:'center'}}>
+            <EmptySearch>
                 <FontAwesome
                     name="exclamation"
                     size={40}
                     color="lightgrey"
                 />
-                <Text style={{marginLeft:0}}>Não foram encontrados resultados {'\n'} para sua pesquisa.</Text>
-            </View>
+                <EmptySearchText>Não foram encontrados resultados {'\n'} para sua pesquisa.</EmptySearchText>
+            </EmptySearch>
         ); 
     }; 
 
     return (
-        <Container>
-            <SearchBar
-                placeholderPhrase="Pesquisar novo posto de saúde"
-                searchPhrase={searchPhrase}
-                setSearchPhrase={setSearchPhrase}
-                clicked={clicked}
-                setClicked={setClicked}
-            />
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <Container>
+                    <Header>
+                        <BackButton activeOpacity={0.7} onPress={() => navigation.goBack()}>
+                            <MaterialIcons name="arrow-back" size={30} color="black"/>
+                        </BackButton>
 
-            <View style={styles.list__container}> 
-                <FlatList
-                    data={fakeData}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
-                    ListEmptyComponent={handleEmpty}
-                />
-            </View> 
-        </Container>
+                        <SearchBar
+                            placeholderPhrase="Pesquisar novo posto de saúde"
+                            searchPhrase={searchPhrase}
+                            setSearchPhrase={setSearchPhrase}
+                            clicked={clicked}
+                            setClicked={setClicked}
+                        />
+                    </Header>
+                    {searchPhrase.length != 0 && (
+                        <ResultsText>
+                            Resultados para {searchPhrase}
+                        </ResultsText>
+                    )}
+                    
+
+                    <ListContainer> 
+                        <FlatList
+                            data={fakeData}
+                            renderItem={renderItem}
+                            keyExtractor={(item) => item.id}
+                            ListEmptyComponent={handleEmpty}
+                        />
+                    </ListContainer> 
+                </Container>
+            </TouchableWithoutFeedback>
     )
 }
 
