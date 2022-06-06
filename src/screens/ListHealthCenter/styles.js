@@ -22,8 +22,9 @@ export const Header = styled.View`
 export const EmptySearchText = styled.Text`
   font-size: 18px;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-left: 0px;
+  color: #9C9C9C;
 `
 
 export const ResultsText = styled.Text`
@@ -46,6 +47,7 @@ export const EmptySearch = styled.View`
   align-items: center;
   justify-content: center;
   align-self: center;
+  margin-top: 60px;
 `
 
 export const BackButton = styled.TouchableOpacity`

@@ -30,7 +30,7 @@ const ListHealthCenter = () => {
                 <FontAwesome
                     name="exclamation"
                     size={40}
-                    color="lightgrey"
+                    color="#9C9C9C"
                 />
                 <EmptySearchText>Não foram encontrados resultados {'\n'} para sua pesquisa.</EmptySearchText>
             </EmptySearch>
