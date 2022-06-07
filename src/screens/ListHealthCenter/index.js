@@ -16,15 +16,31 @@ const ListHealthCenter = () => {
     const navigation = useNavigation()
     const [searchPhrase, setSearchPhrase] = useState(route.params.healthCenter);
     const [clicked, setClicked] = useState(true);
-    const [notFound, setNotFound] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
 
+    const hideText = () => {
+        setIsVisible(false); 
+    }
+
+    const showText = () => {
+        if (searchPhrase.length != 0) {
+            setIsVisible(true); 
+        } else {
+            setIsVisible(false);
+        }
+    }
     const renderItem = ({item}) => {
-        return <ListItem data={item}/>
+        showText();
+        return ( 
+            <ListItem data={item}/>
+        );
     };
 
     const fakeData = jsonData.filter(x => x.name.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, "")))
 
+
     const handleEmpty = () => {
+        hideText();
         return (
             <EmptySearch>
                 <FontAwesome
@@ -53,18 +69,14 @@ const ListHealthCenter = () => {
                             setClicked={setClicked}
                         />
                     </Header>
-                    {searchPhrase.length != 0 && (
-                        <ResultsText>
-                            Resultados para {searchPhrase}
-                        </ResultsText>
-                    )}
                     
-
+                    {isVisible ? <ResultsText>Resultados para {searchPhrase}</ResultsText> : null}
+                    
                     <ListContainer> 
                         <FlatList
                             data={fakeData}
                             renderItem={renderItem}
-                            keyExtractor={(item) => item.id}
+                            keyExtractor={(item, index) => { return index.toString()}}
                             ListEmptyComponent={handleEmpty}
                         />
                     </ListContainer> 

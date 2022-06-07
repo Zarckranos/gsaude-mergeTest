@@ -1,10 +1,6 @@
 import React from "react";
-import { Feather, Entypo } from "@expo/vector-icons";
+import { FontAwesome, Entypo } from "@expo/vector-icons";
 import {Container, SearchBarView, SearchInput } from "./styles";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
-
-
-
 
 const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placeholderPhrase}) => {
     return (
@@ -21,7 +17,7 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placehol
               {clicked && (
                   <Entypo 
                     name="cross" 
-                    size={20}
+                    size={30}
                     color="#929090"
                     style={{ padding: 1 }}
                     onPress={() => {
@@ -31,11 +27,11 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placehol
                   />
               )}
               {!clicked && (
-                  <Feather
+                  <FontAwesome
                     name="search"
-                    size={20}
+                    size={25}
                     color="#929090"
-                    style={{ marginRight: 1 }}
+                    style={{ marginRight: 3 }}
                   />
               )}
           </SearchBarView>
