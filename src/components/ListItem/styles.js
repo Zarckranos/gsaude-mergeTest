@@ -17,17 +17,19 @@ export const ListTitle = styled.Text`
 export const ListDistance = styled.Text`
     font-size: 14px;
     margin-bottom: 5px;
+    color: #A09898;
+    font-weight: bold;
 `
     
 export const LocationButton = styled.TouchableOpacity`
     border: 1px solid #D6D6D6;
     border-radius: 10px;
-    width: 40px;
+    width: 43px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
-    right: 5px;
-
+    right: 0px;
+    bottom: 10px;
 `

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { FontAwesome } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SearchBar from '../../components/SearchBar'
 import ListItem from '../../components/ListItem';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -16,9 +16,8 @@ const ListHealthCenter = () => {
     const navigation = useNavigation()
     const [searchPhrase, setSearchPhrase] = useState(route.params.healthCenter);
     const [clicked, setClicked] = useState(true);
-    const [notFound, setNotFound] = useState(false);
 
-    const renderItem = ({item}) => {
+    const renderItem = ({item, index}) => {
         return <ListItem data={item}/>
     };
 
@@ -27,9 +26,9 @@ const ListHealthCenter = () => {
     const handleEmpty = () => {
         return (
             <EmptySearch>
-                <FontAwesome
-                    name="exclamation"
-                    size={40}
+                <MaterialCommunityIcons
+                    name="exclamation-thick"
+                    size={50}
                     color="#9C9C9C"
                 />
                 <EmptySearchText>Não foram encontrados resultados {'\n'} para sua pesquisa.</EmptySearchText>
@@ -64,7 +63,7 @@ const ListHealthCenter = () => {
                         <FlatList
                             data={fakeData}
                             renderItem={renderItem}
-                            keyExtractor={(item) => item.id}
+                            keyExtractor={(item, index) => {return index.toString()}}
                             ListEmptyComponent={handleEmpty}
                         />
                     </ListContainer> 

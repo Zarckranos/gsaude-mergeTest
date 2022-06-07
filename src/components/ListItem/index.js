@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { FontAwesome } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import { Container, ListTitle, ListDistance, LocationButton } from './styles';
 
 const ListItem = ({ data}) => {
@@ -11,9 +11,9 @@ const ListItem = ({ data}) => {
             <ListTitle>{name}</ListTitle>
             <ListDistance>{distance}</ListDistance>
             <LocationButton>
-                <FontAwesome
-                    name="map-marker"
-                    size={25}
+                <Entypo
+                    name="location-pin"
+                    size={30}
                     color="red"
                 />
             </LocationButton>

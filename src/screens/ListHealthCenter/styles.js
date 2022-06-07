@@ -4,6 +4,7 @@ import { KeyboardAvoidingView } from "react-native";
 export const Container = styled.KeyboardAvoidingView`
   flex: 1;
   justify-content: center;
+  background-color: white;
 `;
 
 export const Header = styled.View`
@@ -16,7 +17,7 @@ export const Header = styled.View`
   align-items: center;
   flex-direction: row;
   border-bottom-width: 1px;
-  border-bottom-color: #D3D3D3;
+  border-bottom-color: #EBE5E5;
 `
 
 export const EmptySearchText = styled.Text`
