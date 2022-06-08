@@ -26,7 +26,7 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [date, setDate] = useState(new Date())
-  const [text, setText] = useState('data de nascimento')
+  const [text, setText] = useState('Data de nascimento')
   const [showPassword, setShowPassword] = useState(false)
 
   const getDate = (event, selectedDate) => {
@@ -40,8 +40,16 @@ const Register = () => {
   }
 
   const handlerSubmit = () => {
-    if(fullname.trim() != '' && cpf.trim() != '' && password.trim() != '' && text != 'data de nascimento') {
-      navigation.navigate("Home")
+    if(fullname.trim() != '' && (cpf.trim() != '' && validateCPF(cpf)) && text != 'Data de nascimento') {
+      if(password.trim().length >= 5) {
+        navigation.navigate("Home")
+      }else {
+        Toast.show({
+          type: 'error',
+          text1: 'Senha fraca!',
+          text2: 'Sua senha precisa ter no mínimo 5 caracteres'
+        });
+      }
     }else {
       Toast.show({
         type: 'error',
@@ -49,6 +57,27 @@ const Register = () => {
         text2: 'Você precisa preencher todos os campos'
       });
     }
+  }
+
+  const validateCPF = (strCPF) => {
+    var Soma;
+    var Resto;
+    Soma = 0;
+    if (strCPF == "00000000000") return false;
+
+    for (i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+    Resto = (Soma * 10) % 11;
+
+      if ((Resto == 10) || (Resto == 11))  Resto = 0;
+      if (Resto != parseInt(strCPF.substring(9, 10)) ) return false;
+
+    Soma = 0;
+      for (i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+      Resto = (Soma * 10) % 11;
+
+      if ((Resto == 10) || (Resto == 11))  Resto = 0;
+      if (Resto != parseInt(strCPF.substring(10, 11) ) ) return false;
+      return true;
   }
 
   return (
@@ -70,7 +99,7 @@ const Register = () => {
             onChangeText={(text) => setCpf(text)}
           />
           <DateButton activeOpacity={0.7} onPress={() => setShowDatePicker(true)}>
-            <TextDate color={text != "data de nascimento" ? "#000" : "#BFBCBC"}>{text}</TextDate>
+            <TextDate color={text != "Data de nascimento" ? "#000" : "#BFBCBC"}>{text}</TextDate>
           </DateButton>
           <Password>
             <InputPassword
@@ -98,6 +127,7 @@ const Register = () => {
           display='default'
           value={date}
           onChange={getDate}
+          maximumDate={ new Date() }
         />
       )}
 
