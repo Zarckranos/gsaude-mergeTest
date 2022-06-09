@@ -33,7 +33,7 @@ const Counter = () => {
             >
                 <AntDesign name="minuscircle" size={40} color="#42B448"/>
             </DecreaseButton>
-            <QuantityTextInput  onChange={handleChange} value={quantity.toString()}/>
+            <QuantityTextInput editable={false} keyboardType='numeric' onChange={handleChange} value={quantity.toString()}/>
             <IncreaseButton onPress={() => {increaseQuantity()}}>
                 <AntDesign name="pluscircle" size={40} color="#42B448"/>
             </IncreaseButton>

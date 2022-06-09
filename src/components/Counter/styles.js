@@ -35,4 +35,5 @@ export const QuantityTextInput = styled.TextInput`
   font-size: 30px;
   text-align: center;
   font-weight: bold;
+  color: #000000;
 `

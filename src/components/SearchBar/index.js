@@ -4,8 +4,6 @@ import {Container, SearchBarView, SearchInput } from "./styles";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 
 
-
-
 const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placeholderPhrase}) => {
     return (
       <Container>
