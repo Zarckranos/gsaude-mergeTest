@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import { FontAwesome } from "@expo/vector-icons";
-import SearchBar from '../../components/SearchBar'
 import ListItem from '../../components/ListItem';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Container, EmptySearch, EmptySearchText, ResultsText, ListContainer, BackButton, Header} from './styles'
@@ -10,37 +9,41 @@ import jsonData from './fakeHealthCenterData.json';
 import { ZoomButton } from '../../components/Minimap/styles';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import SearchBar from '../../components/SearchBar';
 
 const ListHealthCenter = () => {
     const route = useRoute()
     const navigation = useNavigation()
-    const [searchPhrase, setSearchPhrase] = useState(route.params.healthCenter);
-    const [clicked, setClicked] = useState(true);
+    const [search, setSearch] = useState(route.params.healthCenter);
     const [isVisible, setIsVisible] = useState(true);
+    const [filteredDataSource, setFilteredDataSource] = useState([]);
+    const [shouldCrossIconShow, setShouldCrossIconShow] = useState(true);
 
-    const hideText = () => {
-        setIsVisible(false); 
-    }
-
-    const showText = () => {
-        if (searchPhrase.length != 0) {
-            setIsVisible(true); 
+    const searchFilterFunction = (text) => {
+        if (text) {
+            const newData = jsonData.filter(function (item) {
+                const itemData = item.name ? item.name.toUpperCase().trim() : ''.toUpperCase();
+                const textData = text.toUpperCase().trim();
+                return itemData.indexOf(textData) > -1;
+            });
+            newData.length === 0 ? setIsVisible(false) : setIsVisible(true);
+            setFilteredDataSource(newData);
+            setSearch(text);
+            setShouldCrossIconShow(true);
         } else {
+            setFilteredDataSource(jsonData);
+            setSearch(text);
+            setShouldCrossIconShow(false);
             setIsVisible(false);
         }
-    }
+    };
     const renderItem = ({item}) => {
-        showText();
         return ( 
             <ListItem data={item}/>
         );
     };
 
-    const fakeData = jsonData.filter(x => x.name.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, "")))
-
-
     const handleEmpty = () => {
-        hideText();
         return (
             <EmptySearch>
                 <FontAwesome
@@ -63,18 +66,17 @@ const ListHealthCenter = () => {
 
                         <SearchBar
                             placeholderPhrase="Pesquisar novo posto de saúde"
-                            searchPhrase={searchPhrase}
-                            setSearchPhrase={setSearchPhrase}
-                            clicked={clicked}
-                            setClicked={setClicked}
+                            setSearchFilter={searchFilterFunction}
+                            searchPhrase={search}
+                            shouldCrossIconShow={shouldCrossIconShow}
                         />
                     </Header>
                     
-                    {isVisible ? <ResultsText>Resultados para {searchPhrase}</ResultsText> : null}
+                    {isVisible ? <ResultsText>Resultados para {search}</ResultsText> : null}
                     
                     <ListContainer> 
                         <FlatList
-                            data={fakeData}
+                            data={filteredDataSource}
                             renderItem={renderItem}
                             keyExtractor={(item, index) => { return index.toString()}}
                             ListEmptyComponent={handleEmpty}

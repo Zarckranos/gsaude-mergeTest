@@ -1,39 +1,48 @@
 import React from "react";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 import {Container, SearchBarView, SearchInput } from "./styles";
+import { useEffect, useState } from "react";
 
-const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placeholderPhrase}) => {
+const SearchBar = ({searchPhrase, setSearchFilter, shouldCrossIconShow, placeholderPhrase}) => {
+  
+  const renderCrossIcon = () => {
     return (
+      <Entypo 
+        name="cross" 
+        size={30}
+        color="#929090"
+        style={{ padding: 1 }}
+        onPress={() => {
+          setSearchFilter('');
+        }}
+      />
+    );
+  };
+
+  const renderSearchIcon = () => {
+    return (
+      <FontAwesome
+        name="search"
+        size={25}
+        color="#929090"
+        style={{ marginRight: 3 }}
+      />
+    );
+  };
+  useEffect(() => {
+    setSearchFilter(searchPhrase);
+  }, []);
+
+  return (
       <Container>
           <SearchBarView>
               <SearchInput
                 placeholder={placeholderPhrase}
                 value={searchPhrase}
-                onChangeText={setSearchPhrase}
-                onFocus={() => {
-                    setClicked(true);
-                }}
+                onChangeText={(text) => setSearchFilter(text)}
+                onClear={(text) => setSearchFilter('')}
               />
-              {clicked && (
-                  <Entypo 
-                    name="cross" 
-                    size={30}
-                    color="#929090"
-                    style={{ padding: 1 }}
-                    onPress={() => {
-                        setSearchPhrase("");
-                        setClicked(false);
-                    }}
-                  />
-              )}
-              {!clicked && (
-                  <FontAwesome
-                    name="search"
-                    size={25}
-                    color="#929090"
-                    style={{ marginRight: 3 }}
-                  />
-              )}
+              {shouldCrossIconShow ? renderCrossIcon() : renderSearchIcon() }
           </SearchBarView>
       </Container>
     );
