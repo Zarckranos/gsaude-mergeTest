@@ -1,55 +1,50 @@
 import React from "react";
-import { Feather, Entypo } from "@expo/vector-icons";
-import { TextInput, View, Keyboard, Text } from "react-native";
-import styles from './styles'
-import { Button } from "./styles";
+import { FontAwesome, Entypo } from "@expo/vector-icons";
+import {Container, SearchBarView, SearchInput } from "./styles";
+import { useEffect, useState } from "react";
 
-const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placeholderPhrase}) => {
+const SearchBar = ({searchPhrase, setSearchFilter, shouldCrossIconShow, placeholderPhrase}) => {
+  
+  const renderCrossIcon = () => {
     return (
-      <View style={styles.container}>
-          <View style={clicked ? styles.searchBar__clicked : styles.searchBar__unclicked}>
-              <Feather
-                name="search"
-                size={20}
-                color="black"
-                style={{ marginLeft: 1 }}
-              />
-              <TextInput
-                style={styles.input}
+      <Entypo 
+        name="cross" 
+        size={30}
+        color="#929090"
+        style={{ padding: 1 }}
+        onPress={() => {
+          setSearchFilter('');
+        }}
+      />
+    );
+  };
+
+  const renderSearchIcon = () => {
+    return (
+      <FontAwesome
+        name="search"
+        size={25}
+        color="#929090"
+        style={{ marginRight: 3 }}
+      />
+    );
+  };
+  useEffect(() => {
+    setSearchFilter(searchPhrase);
+  }, []);
+
+  return (
+      <Container>
+          <SearchBarView>
+              <SearchInput
                 placeholder={placeholderPhrase}
                 value={searchPhrase}
-                onChangeText={setSearchPhrase}
-                onFocus={() => {
-                    setClicked(true);
-                }}
+                onChangeText={(text) => setSearchFilter(text)}
+                onClear={(text) => setSearchFilter('')}
               />
-              {clicked && (
-                  <Entypo 
-                    name="cross" 
-                    size={20}
-                    color="black"
-                    style={{ padding: 1 }}
-                    onPress={() => {
-                        setSearchPhrase("");
-                        setClicked(false);
-                    }}
-                  />
-              )}
-          </View>
-          {clicked && (
-              <View style={styles.buttonView}>
-                  <Button 
-                    onPress={() => {
-                        Keyboard.dismiss();
-                        setClicked(false);
-                        setSearchPhrase("");
-                    }}
-                  >
-                      <Text style={styles.cancelText}>Cancel</Text>
-                  </Button>
-              </View>
-          )}
-      </View>
+              {shouldCrossIconShow ? renderCrossIcon() : renderSearchIcon() }
+          </SearchBarView>
+      </Container>
     );
 };
 

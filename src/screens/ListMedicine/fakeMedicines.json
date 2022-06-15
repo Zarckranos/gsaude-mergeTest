@@ -1,0 +1,37 @@
+[
+    {
+        "posto":"Posto de Saúde Paulo Marcelo I",
+        "medicine": "Dipirona",
+        "situation": "missing",
+        "availableQuantity": 0,
+        "date": ""
+    },
+    {
+        "posto":"Posto de Saúde Paulo Marcelo II",
+        "medicine": "Dipirona",
+        "situation": "available",
+        "availableQuantity": 50,
+        "date": ""
+    },
+    {
+        "posto":"Posto de Saúde Paulo Miguel",
+        "medicine":"Buscopan",
+        "situation": "available",
+        "availableQuantity": 32,
+        "date": ""
+    },
+    {
+        "posto":"Posto de Saúde Paulo Campos de Castro Ferreira Matos da Silva",
+        "medicine":"Benegripe",
+        "situation": "coming",
+        "availableQuantity": 0,
+        "date": "20/05/22"
+    },
+    {
+        "posto":"Posto de Saúde Almeida",
+        "medicine":"Buscopan",
+        "situation": "missing",
+        "availableQuantity": 0,
+        "date": ""
+    }
+]
