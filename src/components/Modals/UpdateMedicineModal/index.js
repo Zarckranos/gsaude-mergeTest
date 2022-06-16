@@ -3,10 +3,12 @@ import { Modalize } from 'react-native-modalize'
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation} from '@react-navigation/native';
 import DefaultButton from '../../DefaultButton';
+import CounterCopy from '../../CounterCopy';
 import {
   Title,
   Container,
   Text,
+  KeyboardAvoidingView,
   TextSection,
   Item,
   MapButton
@@ -16,14 +18,15 @@ const UpdateMedicineModal = ({ modalizeRef,  name, availableQuantity}) => {
   const navigation = useNavigation()
  
   return (
-    <Modalize ref={modalizeRef} snapPoint={350} handlePosition={'inside'}>
-        <Container>
-            <Title>{name}</Title>
-            <Text>Quantas unidades chegaram?</Text>
-            <DefaultButton name="Salvar"/>
-        </Container>
-      
-    </Modalize>
+        <Modalize ref={modalizeRef} snapPoint={350} handlePosition={'inside'} keyboardAvoidingBehavior={'height'}>
+            <Container>
+                <Title>{name}</Title>
+                <Text>Quantas unidades chegaram?</Text>
+                <CounterCopy availableQuantity={availableQuantity}/>
+                <DefaultButton name="Salvar"/>
+            </Container>
+        </Modalize>
+    
   )
 } 
 

@@ -28,12 +28,10 @@ function chooseBadge (situation, availableQuantity, date) {
   }
 }
 
-
 const MedicineItem = ({ data }) => {
   const { name, availableQuantity, medicineLeaflet, situation, date } = data
   const navigation = useNavigation()
-
- 
+  
   return (
     <Container>
       <Box>
@@ -45,7 +43,7 @@ const MedicineItem = ({ data }) => {
          <Ionicons name="document" size={25} color={"#767373"}/>
          <Text>Ler a bula</Text>
         </Buttons>
-        <Buttons activeOpacity={0.7} onPress={() => navigation.navigate("ListMedicine", {showModal:true, name:name, availableQuantity:availableQuantity})}>
+        <Buttons activeOpacity={0.7} onPress={() => navigation.navigate("ListMedicine", {name:name, availableQuantity:availableQuantity, show: true})}>
          <Ionicons name="create" size={30} color={"#767373"}/>
          <Text>Editar</Text>
         </Buttons>
@@ -55,3 +53,4 @@ const MedicineItem = ({ data }) => {
 }
 
 export default MedicineItem
+
