@@ -18,7 +18,7 @@ const UpdateMedicineModal = ({ modalizeRef,  name, availableQuantity}) => {
   const navigation = useNavigation()
  
   return (
-        <Modalize ref={modalizeRef} snapPoint={350} handlePosition={'inside'} keyboardAvoidingBehavior={'height'}>
+        <Modalize ref={modalizeRef} snapPoint={350} handlePosition={'inside'} keyboardAvoidingBehavior={'height'} modalStyle={{borderTopLeftRadius:25, borderTopRightRadius:25}}>
             <Container>
                 <Title>{name}</Title>
                 <Text>Quantas unidades chegaram?</Text>

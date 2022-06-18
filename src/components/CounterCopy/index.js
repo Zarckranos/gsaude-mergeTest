@@ -26,8 +26,8 @@ const CounterCopy = ({availableQuantity}) => {
         }
     }
 
-    const handleChange = (event) => {
-        setQuantity(event.target.value)
+    const handleChange = (inputText) => {
+        setQuantity(inputText.toString())
     }
 
 
@@ -38,7 +38,7 @@ const CounterCopy = ({availableQuantity}) => {
             >
                 <AntDesign name="minuscircle" size={40} color="#42B448"/>
             </DecreaseButton>
-            <QuantityTextInput keyboardType='numeric' onChange={handleChange} value={quantity}/>
+            <QuantityTextInput keyboardType='numeric' onChangeText={handleChange} value={String(quantity)}/>
             <IncreaseButton onPress={() => {increaseQuantity()}}>
                 <AntDesign name="pluscircle" size={40} color="#42B448"/>
             </IncreaseButton>

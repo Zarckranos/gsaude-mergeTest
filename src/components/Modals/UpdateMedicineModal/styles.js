@@ -9,6 +9,7 @@ export const Title = styled.Text`
   margin-bottom: 10px;
 `
 
+
 export const Container = styled.View`
   justify-content: center;
   width: 100%;
@@ -16,6 +17,7 @@ export const Container = styled.View`
   background-color: #fff;
   margin-bottom: 10px;
   padding: 10px;
+  border-radius: 25px;
 `
 
 export const Text = styled.Text`
@@ -23,14 +25,6 @@ export const Text = styled.Text`
   font-weight: bold;
   font-size: 20px;
 `
-export const KeyboardAvoidingView = styled.KeyboardAvoidingView`
-  background-color:#fff;
-  flex:1;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`
-
 export const MapButton = styled.TouchableOpacity`
   border: 1px solid #D6D6D6;
   border-radius: 10px;
