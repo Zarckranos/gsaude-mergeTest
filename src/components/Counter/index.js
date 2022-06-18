@@ -10,20 +10,20 @@ import {
 import { AntDesign } from '@expo/vector-icons';
 
 const Counter = () => {
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState("0");
 
     const increaseQuantity = () => {
-        setQuantity(quantity + 1);
+        setQuantity(Number(quantity) + 1);
     }
 
     const decreaseQuantity = () => {
         if(quantity > 0) {
-            setQuantity(quantity - 1);
+            setQuantity(Number(quantity) - 1);
         }
     }
 
-    const handleChange = (event) => {
-        setQuantity(event.target.value)
+    const handleChange = (inputText) => {
+        setQuantity(inputText.toString())
     }
 
     return (
@@ -33,7 +33,7 @@ const Counter = () => {
             >
                 <AntDesign name="minuscircle" size={40} color="#42B448"/>
             </DecreaseButton>
-            <QuantityTextInput editable={false} keyboardType='numeric' onChange={handleChange} value={quantity.toString()}/>
+            <QuantityTextInput keyboardType='numeric' onChangeText={handleChange} value={String(quantity)}/>
             <IncreaseButton onPress={() => {increaseQuantity()}}>
                 <AntDesign name="pluscircle" size={40} color="#42B448"/>
             </IncreaseButton>
