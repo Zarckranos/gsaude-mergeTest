@@ -9,36 +9,29 @@ import {
   Container
 } from './styles'
 
-const renderItem = ({item}) => {
-  return (
-    <MedicineItem data={item} />
-  );
-};
 
 
 const ListMedicine = () => {
-  const route = useRoute();
+  const [name, setName] = useState("Teste");
+  const [availableQuantity, setAvailableQuantity] = useState("Teste");
   const modalizeRef = useRef(null);
-  const navigation = useNavigation();
-  const [showModal, setShowModal] = useState(false);
-  
-  useEffect(() => {
-    if (route.params?.show) {
-      setShowModal(true);
-    } 
-  }, [route.params?.show, showModal]);
-  
+
+  const openUpdateMedicineModal = ({name, availableQuantity}) => {
+     modalizeRef.current?.open()
+     setName(name)
+     setAvailableQuantity(availableQuantity)
+  };
+
   return (
     <Container>
       <Header title={"Lista de remédios"} />
       <FlatList
         data={mockData}
-        renderItem={renderItem}
+        renderItem={({item}) => {return <MedicineItem data={item} openModal={openUpdateMedicineModal} />}}
         keyExtractor={(item, index) => { return index.toString()}}
      /> 
 
-     {showModal ? modalizeRef.current.open() : null}
-      <UpdateMedicineModal modalizeRef={modalizeRef} name={route.params?.name} availableQuantity={route.params?.availableQuantity} />
+      <UpdateMedicineModal modalizeRef={modalizeRef} name={name} availableQuantity={availableQuantity} />
     </Container>
   )
 }

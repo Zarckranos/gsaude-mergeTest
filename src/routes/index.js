@@ -103,8 +103,7 @@ const Routes = () => {
         name="ListMedicine"
         component={ListMedicine}
         options={{
-          headerShown:false,
-          showModal:false
+          headerShown:false
         }}
       />
       <Stack.Screen 
