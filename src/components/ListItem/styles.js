@@ -6,6 +6,8 @@ export const Container = styled.View`
     border-bottom-color: #D3D3D3;
     margin-left: 25px;
     margin-right: 25px;
+    display: flex;
+    justify-content: space-between;
 `
 
 export const ListTitle = styled.Text`
