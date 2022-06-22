@@ -8,16 +8,20 @@ export const Container = styled.KeyboardAvoidingView`
 `;
 
 export const Header = styled.View`
-  margin-top: 50px;
-  margin-horizontal: 25px;
-  padding-right: 20px;
-  padding-left: 10px;
+  top: 0;
+  padding-left: 15px;
+  padding-right: 30px;
   padding-vertical: 10px;
   justify-content: center;
   align-items: center;
   flex-direction: row;
   border-bottom-width: 1px;
   border-bottom-color: #EBE5E5;
+  height: 60px;
+  width: 90%;
+  left:25px;
+  right: 20px;
+  position: absolute;
 `
 
 export const EmptySearchText = styled.Text`
@@ -31,17 +35,21 @@ export const EmptySearchText = styled.Text`
 export const ResultsText = styled.Text`
   font-size: 20px;
   font-weight: bold;
+  padding-top: 5px;
   text-align: left;
-  margin-top: 10px;
-  margin-left: 25px;
+  margin-horizontal: 25px;
+  margin-top: 60px;
+  height: 35px;
   color: #42B448;
+  margin-bottom:0px;
 `
 
 export const ListContainer = styled.View` 
-  margin: 10px;
-  height: 85%;
+  margin-horizontal: 10px;
+  height: 80%;
   width: 100%;
   align-self: center;
+  flex: 1;
 `
 export const EmptySearch = styled.View`
   flex: 1;
@@ -58,4 +66,5 @@ export const BackButton = styled.TouchableOpacity`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 10px;
 `

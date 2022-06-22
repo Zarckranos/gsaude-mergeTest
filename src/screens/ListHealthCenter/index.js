@@ -18,7 +18,7 @@ const ListHealthCenter = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [shouldCrossIconShow, setShouldCrossIconShow] = useState(true);
-
+    const [textResult, setTextResult] = useState("");
     const searchFilterFunction = (text) => {
         if (text) {
             const newData = jsonData.filter(function (item) {
@@ -56,6 +56,20 @@ const ListHealthCenter = () => {
         ); 
     }; 
 
+    function chooseTextResult (status, searchText) {
+        switch(status){
+          case "show" :
+            return (
+                <ResultsText>Resultados para {searchText}</ResultsText>
+            )
+          case "hide" :
+            return (
+                <ResultsText></ResultsText>
+            )
+        }
+      }
+
+
     return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <Container>
@@ -71,8 +85,8 @@ const ListHealthCenter = () => {
                             shouldCrossIconShow={shouldCrossIconShow}
                         />
                     </Header>
-                    
-                    {isVisible ? <ResultsText>Resultados para {search}</ResultsText> : null}
+                
+                    {isVisible ? chooseTextResult("show", search) : chooseTextResult("hide")}
                     
                     <ListContainer> 
                         <FlatList
