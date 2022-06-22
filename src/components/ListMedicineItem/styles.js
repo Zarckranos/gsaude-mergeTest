@@ -5,9 +5,11 @@ export const Container = styled.View`
     border-bottom-color: #D3D3D3;
     margin-left: 25px;
     margin-right: 25px;
+    margin-bottom: 10px;
     padding-bottom: 10px;
     justify-content: space-between;
     flex-direction: row;
+    display: flex;
 `
 
 export const Box = styled.View`
@@ -23,9 +25,11 @@ export const ListTitle = styled.Text`
 
 export const Buttons = styled.View`
     justify-content: center;
-    align-items: flex-end;
+    display: flex;
+    align-items: center;
     flex-direction: row;
     padding-left: 5px;
+    right: 3px;
 `
 
 export const LocationButton = styled.TouchableOpacity`
@@ -34,24 +38,19 @@ export const LocationButton = styled.TouchableOpacity`
     border-radius: 10px;
     width: 43px;
     height: 40px;
-    display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    right: 0px;
     bottom: 10px;
 `
 
 export const NotificationButton = styled.TouchableOpacity`
     border: 1px solid #D6D6D6;
     padding: 5px;
-    margin-right: 50px;
     border-radius: 10px;
     width: 43px;
     height: 40px;
-    display: flex;
     align-items: center;
     justify-content: center;
-    right: 0px;
+    right: 45px;
     bottom: 10px;
 `
