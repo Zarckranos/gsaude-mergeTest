@@ -16,7 +16,7 @@ import ListMedicine from '../screens/ListMedicine'
 import ListHealthCenter from '../screens/ListHealthCenter'
 import PDFView from '../screens/PDFView'
 import RegisterNewMedicine from '../screens/RegisterNewMedicine'
-
+import HomeRegisterNewMedicine from '../screens/HomeRegisterNewMedicine'
 const Stack = createNativeStackNavigator()
 
 const Routes = () => {
@@ -125,6 +125,14 @@ const Routes = () => {
       <Stack.Screen
         name="RegisterNewMedicine"
         component={RegisterNewMedicine}
+        options={{
+          headerShown:false
+        }}
+      />
+
+      <Stack.Screen
+        name="HomeRegisterNewMedicine"
+        component={HomeRegisterNewMedicine}
         options={{
           headerShown:false
         }}
