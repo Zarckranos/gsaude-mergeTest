@@ -12,8 +12,13 @@ import {
 
 
 const ListMedicine = () => {
+  const route = useRoute()
+
   const [name, setName] = useState("Teste");
+  const [situation, setSituation] = useState(route.params?.situation);
   const [availableQuantity, setAvailableQuantity] = useState("Teste");
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
+
   const modalizeRef = useRef(null);
 
   const openUpdateMedicineModal = ({name, availableQuantity}) => {
@@ -22,11 +27,25 @@ const ListMedicine = () => {
      setAvailableQuantity(availableQuantity)
   };
 
+  const filterSituationFunction = (situation) => {
+    if (situation) {
+      const newData = mockData.filter(item => item.situation === situation);
+      setFilteredDataSource(newData)
+    } else {
+      setFilteredDataSource(mockData)
+    }
+
+  }
+
+  useEffect(() => {
+    filterSituationFunction(situation)
+  }, [situation]);
+
   return (
     <Container>
       <Header title={"Lista de remédios"} />
       <FlatList
-        data={mockData}
+        data={filteredDataSource}
         renderItem={({item}) => {return <MedicineItem data={item} openModal={openUpdateMedicineModal} />}}
         keyExtractor={(item, index) => { return index.toString()}}
      /> 

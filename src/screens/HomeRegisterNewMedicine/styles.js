@@ -71,7 +71,6 @@ export const ShowMoreText = styled.Text`
     color: #00B954;
 `
 
-
 export const BoxButtonsContainer = styled.View`
     flex-direction: row;
     width: 100%;
@@ -88,8 +87,8 @@ export const GoToScreenButton = styled.TouchableOpacity`
 `
 
 export const GoToScreenImage = styled.Image`
-    width: 64px;
-    height: 64px;
+    width: 60px;
+    height: 60px;
     margin-left: 10px;
 `
 export const GoToScreenText = styled.Text`

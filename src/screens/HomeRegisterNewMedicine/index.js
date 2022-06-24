@@ -71,6 +71,14 @@ const HomeRegisterNewMedicine = () => {
         navigation.navigate("Home")
     }
 
+    const goToListMedicineMissing = () => {
+        navigation.navigate("ListMedicine",{situation:"missing"})
+    }
+
+    const goToListMedicineAvailable = () => {
+        navigation.navigate("ListMedicine",{situation:"available"})
+    }
+
     return (
         <Container>
             <WelcomeText>Seja bem-vindo,</WelcomeText>
@@ -88,20 +96,20 @@ const HomeRegisterNewMedicine = () => {
                     <TitleText>Remédios em falta:</TitleText>
                     <QuantityText>10</QuantityText>
                     <ShowMoreButton> 
-                        <ShowMoreText>ver mais</ShowMoreText>
+                        <ShowMoreText onPress={goToListMedicineMissing}>ver mais</ShowMoreText>
                     </ShowMoreButton>
                 </TextContainer>
                 <TextContainer>
                     <TitleText>Total de remédios disponível:</TitleText>
                     <QuantityText>151</QuantityText>
-                    <ShowMoreButton> 
+                    <ShowMoreButton onPress={goToListMedicineAvailable}> 
                         <ShowMoreText>ver mais</ShowMoreText>
                     </ShowMoreButton>
                 </TextContainer>
                 <TextContainer>
                     <TitleText>Total de remédios:</TitleText>
                     <QuantityText>161</QuantityText>
-                    <ShowMoreButton> 
+                    <ShowMoreButton onPress={goToListMedicine}> 
                         <ShowMoreText>ver mais</ShowMoreText>
                     </ShowMoreButton>
                 </TextContainer>
