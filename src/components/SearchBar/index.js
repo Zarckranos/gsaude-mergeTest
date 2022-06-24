@@ -1,16 +1,22 @@
 import React from "react";
-import { Feather, Entypo, FontAwesome } from "@expo/vector-icons";
-import {Container, SearchBarView, SearchInput } from "./styles";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
-
+import { Feather, Entypo } from "@expo/vector-icons";
+import { TextInput, View, Keyboard, Text } from "react-native";
+import styles from './styles'
+import { Button } from "./styles";
 
 const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placeholderPhrase}) => {
     return (
-      <Container>
-          <SearchBarView>
-              <SearchInput
+      <View style={styles.container}>
+          <View style={clicked ? styles.searchBar__clicked : styles.searchBar__unclicked}>
+              <Feather
+                name="search"
+                size={20}
+                color="black"
+                style={{ marginLeft: 1 }}
+              />
+              <TextInput
+                style={styles.input}
                 placeholder={placeholderPhrase}
-                placeholderTextColor="#929090"
                 value={searchPhrase}
                 onChangeText={setSearchPhrase}
                 onFocus={() => {
@@ -20,25 +26,30 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked, placehol
               {clicked && (
                   <Entypo 
                     name="cross" 
-                    size={30}
-                    color="#929090"
-                    style={{ padding: 1}}
+                    size={20}
+                    color="black"
+                    style={{ padding: 1 }}
                     onPress={() => {
                         setSearchPhrase("");
                         setClicked(false);
                     }}
                   />
               )}
-              {!clicked && (
-                  <FontAwesome
-                    name="search"
-                    size={24}
-                    color="#929090"
-                    style={{ marginRight: 1}}
-                  />
-              )}
-          </SearchBarView>
-      </Container>
+          </View>
+          {clicked && (
+              <View style={styles.buttonView}>
+                  <Button 
+                    onPress={() => {
+                        Keyboard.dismiss();
+                        setClicked(false);
+                        setSearchPhrase("");
+                    }}
+                  >
+                      <Text style={styles.cancelText}>Cancel</Text>
+                  </Button>
+              </View>
+          )}
+      </View>
     );
 };
 

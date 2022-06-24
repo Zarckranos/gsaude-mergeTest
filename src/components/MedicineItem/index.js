@@ -1,8 +1,7 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import Badge from '../Badget'
 import { useNavigation } from '@react-navigation/native'
-
 import {
   Container,
   Box,
@@ -29,10 +28,10 @@ function chooseBadge (situation, availableQuantity, date) {
   }
 }
 
-const MedicineItem = ({ data }) => {
+const MedicineItem = ({ data, openModal }) => {
   const { name, availableQuantity, medicineLeaflet, situation, date } = data
   const navigation = useNavigation()
-
+  
   return (
     <Container>
       <Box>
@@ -44,7 +43,7 @@ const MedicineItem = ({ data }) => {
          <Ionicons name="document" size={25} color={"#767373"}/>
          <Text>Ler a bula</Text>
         </Buttons>
-        <Buttons activeOpacity={0.7}>
+        <Buttons activeOpacity={0.7} onPress={() => openModal({name, availableQuantity})}>
          <Ionicons name="create" size={30} color={"#767373"}/>
          <Text>Editar</Text>
         </Buttons>
@@ -54,3 +53,4 @@ const MedicineItem = ({ data }) => {
 }
 
 export default MedicineItem
+
