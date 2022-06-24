@@ -3,6 +3,7 @@ import Header from '../../components/Header'
 import { useRoute, useNavigation } from '@react-navigation/native';
 import SearchBar from '../../components/SearchBar'
 import { Ionicons } from "@expo/vector-icons";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import {
   Container,
   WelcomeText,
@@ -57,6 +58,7 @@ const HomeRegisterNewMedicine = () => {
     }
 
     return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Container>
                 <WelcomeText>Seja bem-vindo,</WelcomeText>
                 <UsernameText>Nome do funcionário</UsernameText>
@@ -109,6 +111,7 @@ const HomeRegisterNewMedicine = () => {
                     <LogoutButtonText>Sair</LogoutButtonText>
                 </LogoutButton>
             </Container>
+        </TouchableWithoutFeedback>
     )   
 }
 
