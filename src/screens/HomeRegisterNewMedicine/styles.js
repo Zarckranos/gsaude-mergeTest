@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { KeyboardAvoidingView } from "react-native";
 
 export const Container = styled.KeyboardAvoidingView`
     flex: 1;
@@ -14,8 +15,9 @@ export const WelcomeText = styled.Text`
     text-align: left;
     margin-left: 25px;
     color: #000;
+    width: 100%; 
     position: absolute;
-    top: 85px;
+    top: 45px;
 `
 export const UsernameText = styled.Text`
     font-size: 25px;
@@ -23,19 +25,25 @@ export const UsernameText = styled.Text`
     margin-left: 25px;
     color: #000;
     position: absolute;
-    top: 115px;
+    width: 100%;
+    top: 73px;
 `
 export const SearchBarContainer = styled.View`
     width: 100%;
+    position: absolute;
+    top: 113px;
+    margin-horizontal: 19px;
 `
 export const Box = styled.View`
     height: 171px;
+    position: absolute;
+    top: 170px;
+    margin-horizontal: 19px;
     background-color: #F5F0F0;
     border-left-width: 5px;
     border-left-color: #00B954;
     width: 100%;
     border-radius: 5px;
-    margin-top: 19px;
     padding-horizontal: 10px;
     padding-vertical: 25px;
 `
@@ -75,7 +83,9 @@ export const BoxButtonsContainer = styled.View`
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
-    margin-top: 15px;
+    position: absolute;
+    top: 355px;
+    margin-horizontal: 19px;
 `
 export const GoToScreenButton = styled.TouchableOpacity`
     background-color: #F5F0F0;
@@ -107,7 +117,7 @@ export const LogoutButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     height: 35px;
-    bottom: 20px;
+    bottom: 5px;
 `
 
 export const LogoutButtonText = styled.Text`

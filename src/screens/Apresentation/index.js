@@ -16,7 +16,7 @@ const Apresentation = () => {
   const navigation = useNavigation()
 
   const gotToHome = () => {
-    navigation.navigate("Home")
+    navigation.navigate("HomeRegisterNewMedicine")
   }
 
   return (

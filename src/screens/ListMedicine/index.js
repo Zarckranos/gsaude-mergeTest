@@ -15,9 +15,10 @@ const ListMedicine = () => {
   const route = useRoute()
 
   const [name, setName] = useState("Teste");
+  const [search, setSearch] = useState(route.params.medicine)
   const [situation, setSituation] = useState(route.params?.situation);
   const [availableQuantity, setAvailableQuantity] = useState("Teste");
-  const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [filteredDataSource, setFilteredDataSource] = useState(route.params?.filteredDataSource);
 
   const modalizeRef = useRef(null);
 
@@ -27,19 +28,25 @@ const ListMedicine = () => {
      setAvailableQuantity(availableQuantity)
   };
 
-  const filterSituationFunction = (situation) => {
+  const filterSituationFunction = (situation, medicine) => {
     if (situation) {
       const newData = mockData.filter(item => item.situation === situation);
+      setFilteredDataSource(newData)
+    } else if (medicine) {
+      const newData = mockData.filter(function (item) {
+        const itemData = item.name ? item.name.toUpperCase().trim() : ''.toUpperCase();
+        const textData = medicine.toUpperCase().trim();
+        return itemData.indexOf(textData) > -1;
+    });
       setFilteredDataSource(newData)
     } else {
       setFilteredDataSource(mockData)
     }
-
   }
 
   useEffect(() => {
-    filterSituationFunction(situation)
-  }, [situation]);
+    filterSituationFunction(situation, search)
+  }, [situation, search]);
 
   return (
     <Container>
