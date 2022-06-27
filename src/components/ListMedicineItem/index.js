@@ -50,11 +50,12 @@ const ListItem = ({ data }) => {
 
 
             <Buttons>
+                {notification(situation)}
+                
                 <LocationButton>
                     <Ionicons name="location-sharp" size={27} color="#FF0000" />
                 </LocationButton>
 
-                {notification(situation)}
             </Buttons>
         </Container>
     )

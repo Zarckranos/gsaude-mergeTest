@@ -24,15 +24,15 @@ export const ListTitle = styled.Text`
 `
 
 export const Buttons = styled.View`
-    justify-content: center;
     display: flex;
-    align-items: center;
     flex-direction: row;
-    padding-left: 5px;
-    right: 3px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px;
 `
 
 export const LocationButton = styled.TouchableOpacity`
+    display: flex;    
     border: 1px solid #D6D6D6;
     padding: 5px;
     border-radius: 10px;
@@ -44,13 +44,14 @@ export const LocationButton = styled.TouchableOpacity`
 `
 
 export const NotificationButton = styled.TouchableOpacity`
+    display: flex;
     border: 1px solid #D6D6D6;
     padding: 5px;
+    margin: 3px;
     border-radius: 10px;
     width: 43px;
     height: 40px;
     align-items: center;
     justify-content: center;
-    right: 45px;
     bottom: 10px;
 `
