@@ -3,7 +3,7 @@ import DefaultButton from '../../components/DefaultButton'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons'
 import { Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation, useRoute } from '@react-navigation/core'
 import Toast from 'react-native-toast-message'
 
 import {
@@ -18,6 +18,7 @@ import {
   PassButton,
   InputPassword
 } from './styles'
+import api from '../../services/api';
 
 const Register = () => {
   const navigation = useNavigation()
@@ -28,6 +29,8 @@ const Register = () => {
   const [date, setDate] = useState(new Date())
   const [text, setText] = useState('Data de nascimento')
   const [showPassword, setShowPassword] = useState(false)
+  const route = useRoute()
+
 
   const getDate = (event, selectedDate) => {
     const currentDate = selectedDate || date
@@ -39,16 +42,50 @@ const Register = () => {
     setText(fDate)
   }
 
-  const handlerSubmit = () => {
-    if(fullname.trim() != '' && (cpf.trim() != '' && validateCPF(cpf)) && text != 'Data de nascimento') {
-      if(password.trim().length >= 5) {
-        navigation.navigate("Home")
-      }else {
+  const handlerSubmit = async() => {
+    if(fullname.trim() != '' &&  text != 'Data de nascimento') {
+      if(validateCPF(cpf) == false) {
         Toast.show({
           type: 'error',
-          text1: 'Senha fraca!',
-          text2: 'Sua senha precisa ter no mínimo 5 caracteres'
+          text1: 'CPF inválido!',
         });
+      }else {
+        if(password.trim().length >= 5) {
+          try {
+            const response = await api.post('/user/newUser', { 
+              email: route.params?.email,
+              password,
+              name: fullname,
+              dateOfBirth: text,
+              cpf
+            })
+            if(response.data != null) {
+              navigation.navigate("Login")
+              Toast.show({
+                type: 'success',
+                text1: 'Usuário cadastrado com sucesso!',
+              });
+            }else {
+              Toast.show({
+                type: 'error',
+                text1: 'Temos um problema!',
+                text2: 'Algo de errado aconteceu, tente novamente mais tarde'
+              });
+            }
+          }catch(err) {
+            Toast.show({
+              type: 'error',
+              text1: 'Temos um problema!',
+              text2: 'Algo de errado aconteceu, tente novamente mais tarde'
+            });
+          }
+        }else {
+          Toast.show({
+            type: 'error',
+            text1: 'Senha fraca!',
+            text2: 'Sua senha precisa ter no mínimo 5 caracteres'
+          });
+        }
       }
     }else {
       Toast.show({
@@ -65,14 +102,14 @@ const Register = () => {
     Soma = 0;
     if (strCPF == "00000000000") return false;
 
-    for (i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+    for (let i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
     Resto = (Soma * 10) % 11;
 
       if ((Resto == 10) || (Resto == 11))  Resto = 0;
       if (Resto != parseInt(strCPF.substring(9, 10)) ) return false;
 
     Soma = 0;
-      for (i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+      for (let i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
       Resto = (Soma * 10) % 11;
 
       if ((Resto == 10) || (Resto == 11))  Resto = 0;
