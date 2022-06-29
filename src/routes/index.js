@@ -21,6 +21,7 @@ import api from '../services/api'
 import { Alert } from 'react-native'
 import { AuthContext } from '../providers/user/context'
 import { useNavigation } from '@react-navigation/core'
+import RegisterNewMedicine from '../screens/RegisterNewMedicine'
 
 const Stack = createNativeStackNavigator()
 
@@ -207,6 +208,13 @@ const Routes = () => {
           <Stack.Screen 
             name="NewMedicine"
             component={NewMedicine}
+            options={{
+              headerShown:false
+            }}
+          />
+          <Stack.Screen 
+            name="RegisterNewMedicine"
+            component={RegisterNewMedicine}
             options={{
               headerShown:false
             }}
