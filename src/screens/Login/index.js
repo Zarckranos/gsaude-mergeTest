@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useContext } from 'react'
 import DefaultButton from '../../components/DefaultButton'
 import { useNavigation } from '@react-navigation/native';
-import Toast from 'react-native-toast-message';
+// import Toast from 'react-native-toast-message';
+import { AuthContext } from '../../providers/user/context'
 import {
   Container,
   Overlay,
@@ -17,19 +18,20 @@ const Login = () => {
   const [passwordState, setPasswordState] = useState('')
 
   const navigation = useNavigation()
+  const { signIn } = useContext(AuthContext)
 
-  const handleSubmit = () => {
-    if(emailState.trim() != '' && passwordState.trim() != '') {
-      navigation.navigate("Home")
+  // const handleSubmit = () => {
+  //   if(emailState.trim() != '' && passwordState.trim() != '') {
+  //     navigation.navigate("Home")
 
-    }else {
-      Toast.show({
-        type: 'error',
-        text1: 'Temos um problema !',
-        text2: 'Você deve preencher todos os campos'
-      });
-    }
-  }
+  //   }else {
+  //     Toast.show({
+  //       type: 'error',
+  //       text1: 'Temos um problema !',
+  //       text2: 'Você deve preencher todos os campos'
+  //     });
+  //   }
+  // }
 
   return (
     <Container>
@@ -49,7 +51,7 @@ const Login = () => {
           placeholderTextColor={"#6C6868"}
           onChangeText={(password) => setPasswordState(password)}
         />
-        <DefaultButton name="Logar" action={handleSubmit} />
+        <DefaultButton name="Logar" action={() => signIn(emailState, passwordState)} />
         <SignupButton activeOpacity={0.7} onPress={() => navigation.navigate("Signup")}>
           <Text fs={"12px"}>Deseja criar uma conta ?</Text>
         </SignupButton>
