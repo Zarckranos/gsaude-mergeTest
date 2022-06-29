@@ -47,7 +47,8 @@ const ListHealthCenter = () => {
                         <SearchBar
                             placeholderPhrase="Pesquisar novo posto de saúde"
                             searchPhrase={searchPhrase}
-                            setSearchPhrase={setSearchPhrase}
+                            // setSearchPhrase={setSearchPhrase}
+                            setSearchFilter={setSearchPhrase}
                             clicked={clicked}
                             setClicked={setClicked}
                         />

@@ -44,14 +44,14 @@ const Routes = () => {
         }
       case 'LOGIN':
         return {
-          ...prevState,
+          // ...prevState,
           ...action.id,
           userToken: action.token,
           isLoading: true,
         }
       case 'LOGOUT':
         return {
-          ...prevState,
+          // ...prevState,
           userName: null,
           userToken: null,
           isLoading: false,
@@ -96,7 +96,6 @@ const Routes = () => {
             });
           }
         }else {
-          // Alert.alert('Temos um problema !','você precisa preencher todos os campos.', [{text: 'OK'}])
           Toast.show({
             type: 'error',
             text1: 'Temos um problema!',
@@ -109,7 +108,10 @@ const Routes = () => {
     },
     signOut:() => {
       try {
-        Alert.alert('Deseja sair ?','ao sair de sua conta você não poderar ver mais notificações até que esteja logado novamente', 
+        Alert.alert('Deseja sair ?',
+          loginState.healthCenterId != undefined 
+            ? 'ao sair de sua conta você não poderar ver mais notificações até que esteja logado novamente'
+            : '', 
           [
             {text: 'cancelar', style: "cancel"},
             {
@@ -122,6 +124,7 @@ const Routes = () => {
                   text1: 'Você foi deslogado!',
                 });
                 dispatch({ type: 'LOGOUT' })
+                delete loginState.healthCenterId
               }
             }
           ])
@@ -192,7 +195,7 @@ const Routes = () => {
         signUp: authContext.signUp,
         user: loginState}} >
 
-      {loginState.healthCenterId != undefined ? (
+      {(loginState.healthCenterId != undefined) ? (
         <Stack.Navigator>
           <Stack.Screen 
             name="Dashboard"
@@ -287,6 +290,20 @@ const Routes = () => {
           component={PDFView}
           options={{
             title:'Bula'
+          }}
+        />
+        <Stack.Screen 
+          name="ListMedicine"
+          component={ListMedicine}
+          options={{
+            headerShown:false
+          }}
+        />
+        <Stack.Screen
+          name="ListHealthCenter"
+          component={ListHealthCenter}
+          options={{
+            headerShown: false
           }}
         />
         </Stack.Navigator>
