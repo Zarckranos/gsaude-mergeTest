@@ -37,7 +37,7 @@ const Home = () => {
       navigation.navigate("ListMedicine",{medicine:searchState})
 
     }else if (selectInput == 'healthCenter' && searchState.trim() != '') {
-      navigation.navigate("HealthCenter",{healthCenter:searchState})
+      navigation.navigate("ListHealthCenter",{healthCenter:searchState})
       
     }else {
       showToast()

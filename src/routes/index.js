@@ -13,6 +13,7 @@ import NewMedicine from '../screens/NewMedicine'
 import Dashboard from '../screens/Dashboard'
 import SearchMedicine from '../screens/SearchMedicine'
 import ListMedicine from '../screens/ListMedicine'
+import ListHealthCenter from '../screens/ListHealthCenter'
 import PDFView from '../screens/PDFView'
 import Toast from 'react-native-toast-message'
 import AsyncStorage from '@react-native-async-storage/async-storage';
