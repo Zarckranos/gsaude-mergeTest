@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useReducer, useMemo } from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Apresentation from '../screens/Apresentation'
@@ -14,14 +14,17 @@ import Dashboard from '../screens/Dashboard'
 import SearchMedicine from '../screens/SearchMedicine'
 import ListMedicine from '../screens/ListMedicine'
 import PDFView from '../screens/PDFView'
-
+import Toast from 'react-native-toast-message'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../services/api'
 import { Alert } from 'react-native'
 import { AuthContext } from '../providers/user/context'
+import { useNavigation } from '@react-navigation/core'
 
 const Stack = createNativeStackNavigator()
 
 const Routes = () => {
+  const navigation = useNavigation()
 
   const initialLoginState = {
     isLoading: true,
@@ -36,14 +39,14 @@ const Routes = () => {
           ...prevState,
           userToken: action.token,
           ...action.id,
-          isLoading: false,
+          isLoading: action.token != null ? true: false ,
         }
       case 'LOGIN':
         return {
           ...prevState,
           ...action.id,
           userToken: action.token,
-          isLoading: false,
+          isLoading: true,
         }
       case 'LOGOUT':
         return {
@@ -67,66 +70,117 @@ const Routes = () => {
   const authContext = useMemo(() => ({
     signIn: async (email, password) => {
       let userToken = null
-      let user = null ;
+      let user = null
       try {
-        if(password.trim() != '' || email != '') {
-          const response = await api.get('/user/login', { email, password })
-          if (response.data != null) {
+        if(password.trim() != '' & email.trim() != '') {
+          const response = await api.post('/user/login', { email:email, password:password })
+          if (response.data.type  ==  "success") {
             userToken = 'bbb'
-            user = response.data
+            user = response.data.user
             await AsyncStorage.setItem('userToken', userToken)
             await AsyncStorage.setItem('gsaude@user', JSON.stringify(user))
+
+            dispatch({ type: 'LOGIN', id: user, token: userToken })
+            if(user.healthCenterId == undefined) {
+              navigation.navigate("Home")
+              Toast.show({
+                type: 'success',
+                text1: 'Usuário logado com sucesso!',
+              });
+            }
           }else {
-            Alert.alert('Temos um problema !','Usuário ou senha inválido.', [{text: 'OK'}])
+            Toast.show({
+              type: 'error',
+              text1: response.data.message,
+            });
           }
         }else {
-          Alert.alert('Temos um problema !','você precisa preencher todos os campos.', [{text: 'OK'}])
+          // Alert.alert('Temos um problema !','você precisa preencher todos os campos.', [{text: 'OK'}])
+          Toast.show({
+            type: 'error',
+            text1: 'Temos um problema!',
+            text2: 'você precisa preencher todos os campos.',
+          });
         }
       } catch (error) {
         console.log(error)
       }
-      dispatch({ type: 'LOGIN', id: user, token: userToken })
     },
-    signOut: async () => {
+    signOut:() => {
       try {
-        await AsyncStorage.removeItem('userToken')
-        await AsyncStorage.removeItem('gsaude@user')
-
+        Alert.alert('Deseja sair ?','ao sair de sua conta você não poderar ver mais notificações até que esteja logado novamente', 
+          [
+            {text: 'cancelar', style: "cancel"},
+            {
+              text: 'sair',
+              onPress: async() => {
+                await AsyncStorage.removeItem('userToken')
+                await AsyncStorage.removeItem('gsaude@user')
+                Toast.show({
+                  type: 'success',
+                  text1: 'Você foi deslogado!',
+                });
+                dispatch({ type: 'LOGOUT' })
+              }
+            }
+          ])
       } catch (err) {
         console.log(err)
       }
-      dispatch({ type: 'LOGOUT' })
     },
-    signUp: async(name, userName, bio, password, avatar) => {
-      // let userToken = null
-      // let newUser = null
-      // try {
-      //   const response = await api.post('/user/newUser',{name, userName, bio, password, avatar})
-      //   if(response.data != null) {
-      //     userToken = 'bbb'
-      //     newUser = response.data
-      //     await AsyncStorage.setItem('userToken', userToken)
-      //     await AsyncStorage.setItem('BOOOKs@user', JSON.stringify(newUser))
-      //   }
-      // }catch(error) {
-      //   console.log(error)
-      // }
+    signUp: async(email, password, name, dateOfBirth, cpf) => {
+      let userToken = null
+      let newUser = null
+      try {
+        const response = await api.post('/user/newUser', { 
+          email,
+          password,
+          name,
+          dateOfBirth,
+          cpf
+        })
+        if(response.data != null) {
+          userToken = 'bbb'
+          newUser = response.data
+          await AsyncStorage.setItem('userToken', userToken)
+          await AsyncStorage.setItem('gsaude@user', JSON.stringify(newUser))
+          navigation.navigate("Login")
+          Toast.show({
+            type: 'success',
+            text1: 'Usuário cadastrado com sucesso!',
+          });
+
+        }else {
+          Toast.show({
+            type: 'error',
+            text1: 'Temos um problema!',
+            text2: 'Algo de errado aconteceu, tente novamente mais tarde'
+          });
+        }
+
+      }catch(error) {
+        console.log(error)
+      }
 
       // dispatch({ type: 'LOGIN', id:newUser, token: userToken });
 
     }
   }), [])
 
-  useEffect(async() => {
-    let userToken = null
-    try {
-      userToken = await AsyncStorage.getItem('userToken')
-      user = await AsyncStorage.getItem('gsaude@user')
-
-    } catch (err) {
-      console.log(err)
+  useEffect(() => {
+    const getStorage = async () => {
+      let userToken = null
+      try {
+        userToken = await AsyncStorage.getItem('userToken')
+        user = await AsyncStorage.getItem('gsaude@user')
+  
+      } catch (err) {
+        console.log(err)
+      }
+      dispatch({ type: 'RETRIVE_TOKEN', id:JSON.parse(user), token: userToken })
     }
-    dispatch({ type: 'RETRIVE_TOKEN', id:JSON.parse(user), token: userToken })
+
+    getStorage()
   }, [])
 
   return (
@@ -134,37 +188,42 @@ const Routes = () => {
       value={{
         signIn: authContext.signIn, 
         signOut: authContext.signOut,
+        signUp: authContext.signUp,
         user: loginState}} >
 
-      {loginState.userToken != null ? (
+      {loginState.healthCenterId != undefined ? (
         <Stack.Navigator>
           <Stack.Screen 
-            name="Apresentation"
-            component={Apresentation}
+            name="Dashboard"
+            component={Dashboard}
             options={{
               headerShown:false
-           }}
+            }}
           />
-        </Stack.Navigator>
-      ) : (
-        <Stack.Navigator>
           <Stack.Screen 
-            name="Apresentation"
-            component={Apresentation}
+            name="NewMedicine"
+            component={NewMedicine}
+            options={{
+              headerShown:false
+            }}
+          />
+          <Stack.Screen 
+            name="ListMedicine"
+            component={ListMedicine}
             options={{
               headerShown:false
             }}
           />
         </Stack.Navigator>
-      )}
-      <Stack.Navigator>
-        {/* <Stack.Screen 
+      ) : (
+        <Stack.Navigator>
+          <Stack.Screen 
           name="Apresentation"
           component={Apresentation}
           options={{
             headerShown:false
           }}
-        /> */}
+        />
         <Stack.Screen 
           name="Home"
           component={Home}
@@ -179,7 +238,6 @@ const Routes = () => {
             headerShown:false
           }}
         />
-        
         <Stack.Screen 
           name="Login"
           component={Login}
@@ -224,35 +282,14 @@ const Routes = () => {
           }}
         />
         <Stack.Screen 
-          name="NewMedicine"
-          component={NewMedicine}
-          options={{
-            headerShown:false
-          }}
-        />
-        <Stack.Screen 
-          name="Dashboard"
-          component={Dashboard}
-          options={{
-            headerShown:false
-          }}
-        />
-        <Stack.Screen 
-          name="ListMedicine"
-          component={ListMedicine}
-          options={{
-            headerShown:false
-          }}
-        />
-        <Stack.Screen 
           name="PDFView"
           component={PDFView}
           options={{
             title:'Bula'
           }}
         />
-        
-      </Stack.Navigator>
+        </Stack.Navigator>
+      )}
     </AuthContext.Provider>
   )
 }
