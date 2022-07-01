@@ -9,8 +9,8 @@ import {
 } from './styles'
 import { AntDesign } from '@expo/vector-icons';
 
-const Counter = () => {
-    const [quantity, setQuantity] = useState("0");
+const Counter = ({ quantity, setQuantity }) => {
+    // const [quantity, setQuantity] = useState("0");
 
     const increaseQuantity = () => {
         setQuantity(Number(quantity) + 1);
