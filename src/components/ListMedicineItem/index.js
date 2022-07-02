@@ -3,11 +3,11 @@ import Badge from '../Badget';
 import { Ionicons } from '@expo/vector-icons'
 import { Container, ListTitle, Box, LocationButton, NotificationButton, Buttons } from './styles';
 
-function chooseBadge (situation, availableQuantity, date) {
+function chooseBadge (situation, amountAvailable, date) {
     switch(situation){
         case "available" :
             return (
-                <Badge name={`${availableQuantity} unidades disponíveis`} type="available"/>
+                <Badge name={`${amountAvailable} unidades disponíveis`} type="available"/>
             )
 
         case "missing" :
@@ -39,13 +39,13 @@ function notification (situation) {
 }
 
 const ListItem = ({ data }) => {
-    const { posto, situation, availableQuantity, date } = data
+    const { name, situation, amountAvailable, date, latitude, longitude } = data
     
     return (
         <Container> 
             <Box>
-                <ListTitle numberOfLines={2}>{posto}</ListTitle> 
-                {chooseBadge(situation, availableQuantity, date)}
+                <ListTitle numberOfLines={2}>{name}</ListTitle> 
+                {chooseBadge(situation, amountAvailable, date)}
             </Box>
 
 

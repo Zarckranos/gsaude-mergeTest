@@ -10,6 +10,7 @@ export const Container = styled.View`
     justify-content: space-between;
     flex-direction: row;
     display: flex;
+    padding-top: 10px;
 `
 
 export const Box = styled.View`
