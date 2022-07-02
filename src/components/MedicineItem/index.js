@@ -22,9 +22,9 @@ function chooseBadge (situation, availableQuantity, date) {
         <Badge name="Em falta" type="missing"/>
       )
     case "coming" :
-        return (
-          <Badge name={`Chega dia ${date}`} type="coming"/>
-        )
+      return (
+        <Badge name={`Chega dia ${date}`} type="coming"/>
+      )
   }
 }
 
