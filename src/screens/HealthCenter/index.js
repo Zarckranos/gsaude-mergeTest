@@ -46,8 +46,7 @@ const HealthCenter = () => {
 
   useEffect(() => {
     getHealthCenterData();
-
-  },[isLoading]); 
+  },[]); 
     
 
   return (
