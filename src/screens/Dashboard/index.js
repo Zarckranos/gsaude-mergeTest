@@ -29,14 +29,13 @@ import {
 const Dashboard = () => {
     const navigation = useNavigation();
     const [search, setSearch] = useState("");
-    const [healthCenterId, setHealthCenterId] = useState("");
     const { signOut, user } = useContext(AuthContext);
     const [data, setData] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [missing, setMissing] = useState(0);
     const [available, setAvailable] = useState(0);
     const [coming, setComing] = useState(0);
-    
+
     const goToRegisterNewMedicine = () => {
         navigation.navigate("RegisterNewMedicine")
     }
@@ -65,8 +64,9 @@ const Dashboard = () => {
     
     const getAmountMedicines = async () => {
         try {
-          const response = await api.get(`/healthCenter/getAmountMedicines/${healthCenterId}`);
+          const response = await api.get(`/healthCenter/getAmountMedicines/${user.healthCenterId}`);
           setData(response.data);
+          console.log(response.data)
         } catch(error) {
           console.log(error);
           Toast.show({
@@ -89,18 +89,16 @@ const Dashboard = () => {
     }
     
     useEffect(() => {
-        setHealthCenterId(user.healthCenterId)
         getAmountMedicines();
 
         if (isLoading === false ) {
-            console.log(data.data);
             if(data.data) {
                 setMissing(data.data.missing);
                 setAvailable(data.data.available);
                 setComing(data.data.coming);
             }
         }
-      },[]); 
+      },[isLoading]); 
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
