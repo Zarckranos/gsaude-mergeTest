@@ -1,9 +1,11 @@
-import React, { useState, useContext} from 'react'
+import React, { useState, useContext, useEffect} from 'react'
 import { useNavigation } from '@react-navigation/native';
 import SearchBar from '../../components/SearchBar'
 import { Ionicons } from "@expo/vector-icons";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import { Keyboard, TouchableWithoutFeedback, ActivityIndicator } from "react-native";
 import { AuthContext } from '../../providers/user/context'
+import api from '../../services/api';
+import Toast from 'react-native-toast-message'
 
 import {
   Container,
@@ -27,9 +29,14 @@ import {
 const Dashboard = () => {
     const navigation = useNavigation();
     const [search, setSearch] = useState("");
+    const [healthCenterId, setHealthCenterId] = useState("");
     const { signOut, user } = useContext(AuthContext);
-
-
+    const [data, setData] = useState([]);
+    const [isLoading, setLoading] = useState(true);
+    const [missing, setMissing] = useState(0);
+    const [available, setAvailable] = useState(0);
+    const [coming, setComing] = useState(0);
+    
     const goToRegisterNewMedicine = () => {
         navigation.navigate("RegisterNewMedicine")
     }
@@ -55,12 +62,51 @@ const Dashboard = () => {
     const searchFilterMedicine = () => {
         navigation.navigate("ListMedicine",{medicine:search})
     }
+    
+    const getAmountMedicines = async () => {
+        try {
+          const response = await api.get(`/healthCenter/getAmountMedicines/${healthCenterId}`);
+          setData(response.data);
+        } catch(error) {
+          console.log(error);
+          Toast.show({
+            type: 'error',
+            text1: 'Temos um problema!',
+            text2: 'Algo de errado aconteceu, tente novamente mais tarde'
+          });
+          
+        } finally {
+          setLoading(false);
+        }
+    };
+    
+    const getTotalMedicines = () => {
+        if (data) {
+            return parseInt(missing) + parseInt(coming) + parseInt(available) 
+        } else {
+            return 0
+        } 
+    }
+    
+    useEffect(() => {
+        setHealthCenterId(user.healthCenterId)
+        getAmountMedicines();
+
+        if (isLoading === false ) {
+            console.log(data.data);
+            if(data.data) {
+                setMissing(data.data.missing);
+                setAvailable(data.data.available);
+                setComing(data.data.coming);
+            }
+        }
+      },[]); 
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Container>
                 <WelcomeText>Seja bem-vindo,</WelcomeText>
-                <UsernameText>Nome do funcionário</UsernameText>
+                <UsernameText>{user.name}</UsernameText>
                 <SearchBarContainer>
                     <SearchBar
                         placeholderPhrase="Pesquisar remédio"
@@ -70,29 +116,31 @@ const Dashboard = () => {
                         goToListMedicine={searchFilterMedicine}
                     />
                 </SearchBarContainer>
+                { isLoading ? <ActivityIndicator/> :
                 <Box>
                     <TextContainer>
                         <TitleText>Remédios em falta:</TitleText>
-                        <QuantityText>10</QuantityText>
+                        <QuantityText>{missing}</QuantityText>
                         <ShowMoreButton> 
                             <ShowMoreText onPress={goToListMedicineMissing}>ver mais</ShowMoreText>
                         </ShowMoreButton>
                     </TextContainer>
                     <TextContainer>
                         <TitleText>Total de remédios disponível:</TitleText>
-                        <QuantityText>151</QuantityText>
+                        <QuantityText>{available}</QuantityText>
                         <ShowMoreButton onPress={goToListMedicineAvailable}> 
                             <ShowMoreText>ver mais</ShowMoreText>
                         </ShowMoreButton>
                     </TextContainer>
                     <TextContainer>
                         <TitleText>Total de remédios:</TitleText>
-                        <QuantityText>161</QuantityText>
+                        <QuantityText>{getTotalMedicines()}</QuantityText>
                         <ShowMoreButton onPress={goToListMedicine}> 
                             <ShowMoreText>ver mais</ShowMoreText>
                         </ShowMoreButton>
                     </TextContainer>
-                </Box>
+                </Box> 
+                }
 
                 <BoxButtonsContainer>
                     <GoToScreenButton onPress={goToRegisterNewMedicine}> 
