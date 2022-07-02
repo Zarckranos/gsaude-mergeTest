@@ -36,7 +36,6 @@ const HealthCenter = () => {
       const response = await api.get('/healthCenter/629a4ae1139e68861edfa7d6');
       setData(response.data);
       setMedicines(response.data.medicines);
-      
     } catch(error) {
       console.log(error);
     } finally {
@@ -48,7 +47,6 @@ const HealthCenter = () => {
     getHealthCenterData();
   },[]); 
     
-
   return (
     <Container>
       <Image 
