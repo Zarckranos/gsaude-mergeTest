@@ -5,6 +5,7 @@ import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import SearchBar from '../../components/SearchBar'
 import { FlatList } from "react-native";
 import ListMedicineItem from '../../components/ListMedicineItem';
+import Toast from 'react-native-toast-message'
 import api from '../../services/api'
 
 import { Container, EmptySearch, EmptySearchText, ResultsText, ListContainer, BackButton, Header} from './styles'
@@ -21,8 +22,9 @@ const ListMedicine = () => {
 
 	const [filteredDataSource, setFilteredDataSource] = useState([]);
 	const [shouldCrossIconShow, setShouldCrossIconShow] = useState(true);
-	 
+	
 	const searchFilterFunction = async(text) => {
+		setSearch(text);
 		if(text.trim() != '') {
 			try {
 				const medicine = await api.get(`medicine/${text}`)
@@ -41,7 +43,11 @@ const ListMedicine = () => {
 					setIsVisible(false);
 				}
 			} catch(err) {
-				console.log('tente mais tarde')
+				Toast.show({
+					type: 'error',
+					text1: 'Temos um problema !',
+					text2: 'tente mais tarde'
+				});
 			}
 		} else {
 			setFilteredDataSource([]);
@@ -49,23 +55,6 @@ const ListMedicine = () => {
             setShouldCrossIconShow(false);
             setIsVisible(false);
 		}
-		
-        //if (text) {
-        //    const newData = jsonData.filter(function (item) {
-        //        const itemData = item.medicine ? item.medicine.toUpperCase().trim() : ''.toUpperCase();
-        //        const textData = text.toUpperCase().trim();
-        //        return itemData.indexOf(textData) > -1;
-        //    });
-        //    newData.length === 0 ? setIsVisible(false) : setIsVisible(true);
-        //    setFilteredDataSource(newData);
-        //    setSearch(text);
-        //    setShouldCrossIconShow(true);
-        //} else {
-        //    setFilteredDataSource(jsonData);
-        //    setSearch(text);
-        //    setShouldCrossIconShow(false);
-        //    setIsVisible(false);
-        //}
     };
 
   	const renderItem = ({item}) => {
@@ -73,18 +62,6 @@ const ListMedicine = () => {
       		<ListMedicineItem data={item}/>
     	);
   	};
-
-	const isSearchEmpty = () => {
-		if(search.trim() == '') {
-			return (
-				<EmptySearchText>Campo de busca vazio.</EmptySearchText>
-			)
-		}
-		
-		return (
-			<EmptySearchText>Não foram encontrados resultados {'\n'} para sua pesquisa.</EmptySearchText>
-		)
-	}
 
   	const handleEmpty = () => {
     	return (
@@ -94,8 +71,11 @@ const ListMedicine = () => {
 					size={40}
 					color="#9C9C9C"
         		/>
-
-        		{isSearchEmpty}
+				
+				{search == ''
+					? <EmptySearchText>Campo de busca vazio.</EmptySearchText>
+					: <EmptySearchText>Não foram encontrados resultados {'\n'} para sua pesquisa.</EmptySearchText>
+				}
       		</EmptySearch>
     	); 
   	}; 
