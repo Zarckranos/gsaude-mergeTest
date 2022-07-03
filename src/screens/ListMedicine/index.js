@@ -34,26 +34,26 @@ const ListMedicine = () => {
 
 					inventory.length === 0 ? setIsVisible(false) : setIsVisible(true);
 					setFilteredDataSource(inventory);
-					setSearch(text);
+					
 					setShouldCrossIconShow(true);
 				} else {
-					setFilteredDataSource([]);
-					setSearch(text);
-					setShouldCrossIconShow(false);
 					setIsVisible(false);
+					setFilteredDataSource([]);
+					
+					setShouldCrossIconShow(false);
 				}
 			} catch(err) {
 				Toast.show({
 					type: 'error',
-					text1: 'Temos um problema !',
+					text1: 'Temos um problema!',
 					text2: 'tente mais tarde'
 				});
 			}
 		} else {
-			setFilteredDataSource([]);
-            setSearch(text);
-            setShouldCrossIconShow(false);
             setIsVisible(false);
+			setFilteredDataSource([]);
+            
+            setShouldCrossIconShow(false);
 		}
     };
 

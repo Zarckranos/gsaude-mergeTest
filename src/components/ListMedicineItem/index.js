@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Badge from '../Badget';
+import Toast from 'react-native-toast-message'
 import { Ionicons } from '@expo/vector-icons'
 import { Container, ListTitle, Box, LocationButton, NotificationButton, Buttons } from './styles';
+import { useNavigation } from '@react-navigation/native'
+import { AuthContext } from '../../providers/user/context'
 
 function chooseBadge (situation, amountAvailable, date) {
     switch(situation){
@@ -22,25 +25,27 @@ function chooseBadge (situation, amountAvailable, date) {
     }
 }
 
-function notification (situation) {
-    switch(situation) {
-        case "coming":
-            return (
-                <NotificationButton>
-                    <Ionicons
-                        name="notifications"
-                        size={27}
-                        color='#A8A79D'
-                    />
-                </NotificationButton>
-            )
-        default:
-    }
-}
-
 const ListItem = ({ data }) => {
-    const { name, situation, amountAvailable, date, latitude, longitude } = data
-    
+    const { name, situation, amountAvailable, date, _id } = data
+    const navigation = useNavigation()
+    const { user } = useContext(AuthContext)
+
+    const addNotification = () => {
+        if (user.isLoading) {
+            console.log('cadastrado')
+        } else {
+            Toast.show({
+                type: 'warning',
+                text1: 'Temos um problema !',
+                text2: 'Você precisa está logado para receber notificações.'
+            });
+        }
+    }
+
+    const goToHealthCenter = () => {
+        navigation.navigate("HealthCenter", {_id})
+    }
+
     return (
         <Container> 
             <Box>
@@ -48,11 +53,15 @@ const ListItem = ({ data }) => {
                 {chooseBadge(situation, amountAvailable, date)}
             </Box>
 
-
             <Buttons>
-                {notification(situation)}
+                {situation == "coming"
+                    ? <NotificationButton onPress={addNotification}>
+                        <Ionicons name="notifications" size={27} color='#A8A79D'/>
+                      </NotificationButton> 
+                    : null
+                }
                 
-                <LocationButton>
+                <LocationButton onPress={goToHealthCenter}>
                     <Ionicons name="location-sharp" size={27} color="#FF0000" />
                 </LocationButton>
 
