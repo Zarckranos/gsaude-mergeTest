@@ -1,7 +1,9 @@
-import React, {useRef} from 'react'
+import React, { useContext } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import Badge from '../Badget'
 import { useNavigation } from '@react-navigation/native'
+import { AuthContext } from '../../providers/user/context'
+
 import {
   Container,
   Box,
@@ -30,10 +32,11 @@ function chooseBadge (situation, availableQuantity, date) {
 
 const MedicineItem = ({ data, openModal }) => {
   const {amountAvailable, situation } = data
-  const {name} = data.medicine
+  const {name} = data.medicine || data
   const date = "20/05/22"
   const navigation = useNavigation()
-  
+  const { user } = useContext(AuthContext)
+
   return (
     <Container>
       <Box>
@@ -45,10 +48,14 @@ const MedicineItem = ({ data, openModal }) => {
          <Ionicons name="document" size={25} color={"#767373"}/>
          <Text>Ler a bula</Text>
         </Buttons>
-        <Buttons activeOpacity={0.7} onPress={() => openModal({name, amountAvailable})}>
-         <Ionicons name="create" size={30} color={"#767373"}/>
-         <Text>Editar</Text>
-        </Buttons>
+        {
+          user.healthCenterId != undefined && (
+            <Buttons activeOpacity={0.7} onPress={() => openModal(name, amountAvailable)}>
+              <Ionicons name="create" size={30} color={"#767373"}/>
+              <Text>Editar</Text>
+            </Buttons>
+          )
+        }
       </Footer>
     </Container>
   )

@@ -124,18 +124,18 @@ const Dashboard = () => {
                         </ShowMoreButton>
                     </TextContainer>
                     <TextContainer>
-                        <TitleText>Total de remédios disponível:</TitleText>
-                        <QuantityText>{available}</QuantityText>
+                        <TitleText>Remédios disponíveis:</TitleText>
+                        <QuantityText>151</QuantityText>
                         <ShowMoreButton onPress={goToListMedicineAvailable}> 
                             <ShowMoreText>ver mais</ShowMoreText>
                         </ShowMoreButton>
                     </TextContainer>
                     <TextContainer>
                         <TitleText>Total de remédios:</TitleText>
-                        <QuantityText>{getTotalMedicines()}</QuantityText>
-                        <ShowMoreButton onPress={goToListMedicine}> 
+                        <QuantityText>161</QuantityText>
+                        {/* <ShowMoreButton onPress={goToListMedicine}> 
                             <ShowMoreText>ver mais</ShowMoreText>
-                        </ShowMoreButton>
+                        </ShowMoreButton> */}
                     </TextContainer>
                 </Box> 
                 }
