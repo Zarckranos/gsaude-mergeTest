@@ -1,28 +1,28 @@
 [
     {
         "name":"Dipirona",
-        "availableQuantity":"50",
+        "amountAvailable":900,
         "medicineLeaflet":"",
         "situation":"available",
         "date":""
     },
     {
         "name":"Buscopan",
-        "availableQuantity":"0",
+        "amountAvailable":0,
         "medicineLeaflet":"",
         "situation":"missing",
         "date":""
     },
     {
         "name":"Dorflex",
-        "availableQuantity":"50",
+        "amountAvailable":50,
         "medicineLeaflet":"",
         "situation":"available",
         "date":""
     },
     {
         "name":"Nome do remédio",
-        "availableQuantity":"0",
+        "amountAvailable":0,
         "medicineLeaflet":"",
         "situation":"coming",
         "date":"20/05/22"
