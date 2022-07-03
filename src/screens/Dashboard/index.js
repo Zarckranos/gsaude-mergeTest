@@ -79,7 +79,7 @@ const Dashboard = () => {
                         </ShowMoreButton>
                     </TextContainer>
                     <TextContainer>
-                        <TitleText>Total de remédios disponível:</TitleText>
+                        <TitleText>Remédios disponíveis:</TitleText>
                         <QuantityText>151</QuantityText>
                         <ShowMoreButton onPress={goToListMedicineAvailable}> 
                             <ShowMoreText>ver mais</ShowMoreText>
@@ -88,9 +88,9 @@ const Dashboard = () => {
                     <TextContainer>
                         <TitleText>Total de remédios:</TitleText>
                         <QuantityText>161</QuantityText>
-                        <ShowMoreButton onPress={goToListMedicine}> 
+                        {/* <ShowMoreButton onPress={goToListMedicine}> 
                             <ShowMoreText>ver mais</ShowMoreText>
-                        </ShowMoreButton>
+                        </ShowMoreButton> */}
                     </TextContainer>
                 </Box>
 

@@ -50,7 +50,7 @@ const HealthCenter = () => {
   return (
     <Container>
       <Image 
-        source={{uri:'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fdiariodonordeste.verdesmares.com.br%2Fpolopoly_fs%2F1.1482114!%2Fimage%2Fimage.jpg&f=1&nofb=1'}}
+        source={{uri:data.image}}
         resizeMode="cover"
       >
         <BackButton onPress={() => navigation.goBack()}>
