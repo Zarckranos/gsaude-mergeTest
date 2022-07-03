@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 import {Container, SearchBarView, SearchInput } from "./styles";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const SearchBar = ({searchPhrase, setSearchFilter, shouldCrossIconShow, placeholderPhrase, goToListMedicine}) => {
   
@@ -27,7 +27,6 @@ const SearchBar = ({searchPhrase, setSearchFilter, shouldCrossIconShow, placehol
         color="#929090"
         style={{ marginRight: 3 }}
         onPress={ () => {
-          console.log(searchPhrase)
           goToListMedicine({searchPhrase});
           }
         }
@@ -43,9 +42,11 @@ const SearchBar = ({searchPhrase, setSearchFilter, shouldCrossIconShow, placehol
           <SearchBarView>
               <SearchInput
                 placeholder={placeholderPhrase}
-                value={searchPhrase}
+                defaultValue={searchPhrase}
                 onChangeText={(text) => setSearchFilter(text)}
                 onClear={(text) => setSearchFilter('')}
+                returnKeyType="go"
+                onSubmitEditing={() => goToListMedicine({searchPhrase})}
               />
               {shouldCrossIconShow ? renderCrossIcon() : renderSearchIcon() }
           </SearchBarView>
