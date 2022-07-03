@@ -36,20 +36,8 @@ const Dashboard = () => {
     const [available, setAvailable] = useState(0);
     const [coming, setComing] = useState(0);
 
-    const goToRegisterNewMedicine = () => {
-        navigation.navigate("RegisterNewMedicine")
-    }
-
     const goToListMedicine = () => {
         navigation.navigate("ListMedicine",{medicine:""})
-    }
-
-    const goToListMedicineMissing = () => {
-        navigation.navigate("ListMedicine",{situation:"missing"})
-    }
-
-    const goToListMedicineAvailable = () => {
-        navigation.navigate("ListMedicine",{situation:"available"})
     }
 
     const searchFilterFunction = (text) => {
@@ -66,9 +54,7 @@ const Dashboard = () => {
         try {
           const response = await api.get(`/healthCenter/getAmountMedicines/${user.healthCenterId}`);
           setData(response.data);
-          console.log(response.data)
         } catch(error) {
-          console.log(error);
           Toast.show({
             type: 'error',
             text1: 'Temos um problema!',
@@ -79,14 +65,6 @@ const Dashboard = () => {
           setLoading(false);
         }
     };
-    
-    const getTotalMedicines = () => {
-        if (data) {
-            return parseInt(missing) + parseInt(coming) + parseInt(available) 
-        } else {
-            return 0
-        } 
-    }
     
     useEffect(() => {
         getAmountMedicines();
@@ -114,34 +92,40 @@ const Dashboard = () => {
                         goToListMedicine={searchFilterMedicine}
                     />
                 </SearchBarContainer>
-                { isLoading ? <ActivityIndicator/> :
+                { isLoading ? <Box><TitleText style={{textAlign: "center"}}>carregando informações</TitleText><ActivityIndicator/></Box> :
                 <Box>
                     <TextContainer>
                         <TitleText>Remédios em falta:</TitleText>
                         <QuantityText>{missing}</QuantityText>
                         <ShowMoreButton> 
-                            <ShowMoreText onPress={goToListMedicineMissing}>ver mais</ShowMoreText>
+                            <ShowMoreText onPress={() => navigation.navigate("ListMedicine",{situation:"missing"})}>
+                              ver mais
+                            </ShowMoreText>
                         </ShowMoreButton>
                     </TextContainer>
                     <TextContainer>
                         <TitleText>Remédios disponíveis:</TitleText>
-                        <QuantityText>151</QuantityText>
-                        <ShowMoreButton onPress={goToListMedicineAvailable}> 
+                        <QuantityText>{available}</QuantityText>
+                        <ShowMoreButton onPress={() => navigation.navigate("ListMedicine",{situation:"available"})}> 
+                            <ShowMoreText>ver mais</ShowMoreText>
+                        </ShowMoreButton>
+                    </TextContainer>
+                    <TextContainer>
+                        <TitleText>Remédios chegando:</TitleText>
+                        <QuantityText>{coming}</QuantityText>
+                        <ShowMoreButton onPress={() => navigation.navigate("ListMedicine",{situation:"coming"})}> 
                             <ShowMoreText>ver mais</ShowMoreText>
                         </ShowMoreButton>
                     </TextContainer>
                     <TextContainer>
                         <TitleText>Total de remédios:</TitleText>
-                        <QuantityText>161</QuantityText>
-                        {/* <ShowMoreButton onPress={goToListMedicine}> 
-                            <ShowMoreText>ver mais</ShowMoreText>
-                        </ShowMoreButton> */}
+                        <QuantityText>{missing + available + coming}</QuantityText>
                     </TextContainer>
                 </Box> 
                 }
 
                 <BoxButtonsContainer>
-                    <GoToScreenButton onPress={goToRegisterNewMedicine}> 
+                    <GoToScreenButton onPress={() => navigation.navigate("RegisterNewMedicine")}> 
                         <GoToScreenImage source={require('../../assets/medicine.png')} resizeMode="contain"/>
                         <GoToScreenText>Cadastrar novos remédios</GoToScreenText>
                     </GoToScreenButton>

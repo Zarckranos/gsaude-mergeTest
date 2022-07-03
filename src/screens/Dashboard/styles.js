@@ -44,13 +44,17 @@ export const Box = styled.View`
     border-left-color: #00B954;
     width: 100%;
     border-radius: 5px;
-    padding-horizontal: 10px;
-    padding-vertical: 25px;
+    /* padding-horizontal: 10px; */
+    /* padding-vertical: 5px; */
+    display: flex;
+    justify-content: center;
+    padding-left: 10px;
 `
 
 export const TextContainer = styled.View`
     flex-direction: row;
-    margin-top: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 `
 
 export const TitleText = styled.Text`

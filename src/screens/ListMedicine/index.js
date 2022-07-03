@@ -3,13 +3,11 @@ import Header from '../../components/Header'
 import MedicineItem from '../../components/MedicineItem'
 import { FlatList } from "react-native";
 import mockData from './mockData.json';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import UpdateMedicineModal from '../../components/Modals/UpdateMedicineModal';
 import {
   Container
 } from './styles'
-
-
 
 const ListMedicine = () => {
   const route = useRoute()
