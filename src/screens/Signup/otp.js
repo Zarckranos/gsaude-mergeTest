@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import Header from '../../components/Header'
 import { useNavigation, useRoute } from '@react-navigation/core'
 import Toast from 'react-native-toast-message'
+import api from '../../services/api'
 
 import {
   Container,
@@ -26,12 +27,22 @@ const Otp = () => {
   const fourthInput = useRef();
   const [otp, setOtp] = useState({1: '', 2: '', 3: '', 4: ''});
 
-  const showToast = () => {
-    Toast.show({
-      type: 'success',
-      text1: 'Reenviamos um código para você!',
-      text2: 'Não se esqueça de olhar no spam tambem !'
-    });
+  const showToast = async() => {
+    try {
+      await api.post('/user/sendCode',{ email: route.params?.email })
+      Toast.show({
+        type: 'success',
+        text1: 'Reenviamos um código para você!',
+        text2: 'Não se esqueça de olhar no spam tambem !'
+      });
+      setOtp({1: '', 2: '', 3: '', 4: ''})
+    } catch(err) {
+      Toast.show({
+        type: 'error',
+        text1: 'Temos um problema!',
+        text2: 'Algo de errado aconteceu, tente novamente mais tarde'
+      });
+    }
   }
 
   return (
@@ -47,6 +58,7 @@ const Otp = () => {
             keyboardType="number-pad"
             maxLength={1}
             ref={firstInput}
+            defaultValue={otp[1]}
             onChangeText = { text => {
               setOtp({...otp, 1: text});
               text && secondInput.current.focus()
@@ -58,6 +70,7 @@ const Otp = () => {
             keyboardType="number-pad"
             maxLength={1}
             ref={secondInput}
+            defaultValue={otp[2]}
             onChangeText = { text => {
               setOtp({...otp, 2: text});
               text ? thirdInput.current.focus() : firstInput.current.focus();
@@ -69,6 +82,7 @@ const Otp = () => {
             keyboardType="number-pad"
             maxLength={1}
             ref={thirdInput}
+            defaultValue={otp[3]}
             onChangeText = { text => {
               setOtp({...otp, 3: text});
               text ? fourthInput.current.focus() : secondInput.current.focus();
@@ -80,11 +94,30 @@ const Otp = () => {
             keyboardType="number-pad"
             maxLength={1}
             ref={fourthInput}
-            onChangeText = { text => {
+            defaultValue={otp[4]}
+            onChangeText = { async (text) => {
               setOtp({...otp, 4: text});
               !text && thirdInput.current.focus();
-              console.log({...otp, 4: text})
-              navigation.navigate("Register")
+              let otpNumber = Number(`${otp[1]}${otp[2]}${otp[3]}${text}`) 
+              try {
+                const resp = await api.get(`/user/validateVerificationCode/${otpNumber}`)
+                if(resp.data.type == 'success') {
+                  navigation.navigate("Register", { email: route.params?.email})
+                } else {
+                  Toast.show({
+                    type: 'error',
+                    text1: 'Temos um problema!',
+                    text2: 'Codigo atual inspirado ou inválido'
+                  });
+                }
+
+              }catch(err) {
+                Toast.show({
+                  type: 'error',
+                  text1: 'Temos um problema!',
+                  text2: 'Algo de errado aconteceu, tente novamente mais tarde'
+                });
+              }
             }}
           />
         </OtpBox>

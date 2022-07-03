@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { FontAwesome } from "@expo/vector-icons";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
-
-import SearchBar from '../../components/SearchBar'
+import React, {useRef, useState, useEffect} from 'react'
+import Header from '../../components/Header'
+import MedicineItem from '../../components/MedicineItem'
 import { FlatList } from "react-native";
-import ListMedicineItem from '../../components/ListMedicineItem';
-import Toast from 'react-native-toast-message'
-import api from '../../services/api'
+import mockData from './mockData.json';
+import { useRoute } from '@react-navigation/native';
+import UpdateMedicineModal from '../../components/Modals/UpdateMedicineModal';
+import {
+  Container
+} from './styles'
 
 import { Container, EmptySearch, EmptySearchText, ResultsText, ListContainer, BackButton, Header} from './styles'
 import { MaterialIcons } from '@expo/vector-icons';
@@ -14,101 +15,54 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 const ListMedicine = () => {
-  	const route = useRoute()
-  	const navigation = useNavigation()
-	  
-  	const [search, setSearch] = useState(route.params.medicine)
-  	const [isVisible, setIsVisible] = useState(true);
+  const route = useRoute()
 
-	const [filteredDataSource, setFilteredDataSource] = useState([]);
-	const [shouldCrossIconShow, setShouldCrossIconShow] = useState(true);
-	
-	const searchFilterFunction = async(text) => {
-		setSearch(text);
-		if(text.trim() != '') {
-			try {
-				const medicine = await api.get(`medicine/${text}`)
-	
-				if(medicine.data.type == "success") {
-					const inventory = medicine.data.data.inventory
+  const [name, setName] = useState("Teste");
+  const [search, setSearch] = useState(route.params.medicine)
+  const [situation, setSituation] = useState(route.params?.situation);
+  const [availableQuantity, setAvailableQuantity] = useState(0);
+  const [filteredDataSource, setFilteredDataSource] = useState(route.params?.filteredDataSource);
 
-					inventory.length === 0 ? setIsVisible(false) : setIsVisible(true);
-					setFilteredDataSource(inventory);
-					
-					setShouldCrossIconShow(true);
-				} else {
-					setIsVisible(false);
-					setFilteredDataSource([]);
-					
-					setShouldCrossIconShow(false);
-				}
-			} catch(err) {
-				Toast.show({
-					type: 'error',
-					text1: 'Temos um problema!',
-					text2: 'tente mais tarde'
-				});
-			}
-		} else {
-            setIsVisible(false);
-			setFilteredDataSource([]);
-            
-            setShouldCrossIconShow(false);
-		}
-    };
+  const modalizeRef = useRef(null);
 
-  	const renderItem = ({item}) => {
-    	return ( 
-      		<ListMedicineItem data={item}/>
-    	);
-  	};
+  const openUpdateMedicineModal = (name, availableQuantity) => {
+     modalizeRef.current?.open()
+     setName(name)
+     setAvailableQuantity(availableQuantity)
+  };
 
-  	const handleEmpty = () => {
-    	return (
-      		<EmptySearch>
-        		<FontAwesome
-          			name="exclamation"
-					size={40}
-					color="#9C9C9C"
-        		/>
-				
-				{search == ''
-					? <EmptySearchText>Campo de busca vazio.</EmptySearchText>
-					: <EmptySearchText>Não foram encontrados resultados {'\n'} para sua pesquisa.</EmptySearchText>
-				}
-      		</EmptySearch>
-    	); 
-  	}; 
+  const filterSituationFunction = (situation, medicine) => {
+    if (situation) {
+      const newData = mockData.filter(item => item.situation === situation);
+      setFilteredDataSource(newData)
+    } else if (medicine) {
+      const newData = mockData.filter(function (item) {
+        const itemData = item.name ? item.name.toUpperCase().trim() : ''.toUpperCase();
+        const textData = medicine.toUpperCase().trim();
+        return itemData.indexOf(textData) > -1;
+    });
+      setFilteredDataSource(newData)
+    } else {
+      setFilteredDataSource(mockData)
+    }
+  }
 
-  	return (
-    	<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      		<Container>
-        		<Header>
-            		<BackButton activeOpacity={0.7} onPress={() => navigation.goBack()}>
-              			<MaterialIcons name="arrow-back" size={30} color="black"/>
-            		</BackButton>
+  useEffect(() => {
+    filterSituationFunction(situation, search)
+  }, [situation, search]);
 
-            		<SearchBar
-						placeholderPhrase="Pesquisar novo remédio"
-						setSearchFilter={searchFilterFunction}
-						searchPhrase={search}
-						shouldCrossIconShow={shouldCrossIconShow}
-            		/>
-        		</Header>
+  return (
+    <Container>
+      <Header title={"Lista de remédios"} />
+      <FlatList
+        data={filteredDataSource}
+        renderItem={({item}) => {return <MedicineItem data={item} openModal={openUpdateMedicineModal} />}}
+        keyExtractor={(item, index) => { return index.toString()}}
+     /> 
 
-        		{isVisible ? <ResultsText>Resultados para {search}</ResultsText> : null}
-
-        		<ListContainer> 
-          			<FlatList
-						data={filteredDataSource}
-						renderItem={renderItem}
-						keyExtractor={(item, index) => { return index.toString()}}
-						ListEmptyComponent={handleEmpty}
-          			/>
-        		</ListContainer> 
-      		</Container>
-    	</TouchableWithoutFeedback>
-  	)
+      <UpdateMedicineModal modalizeRef={modalizeRef} name={name} availableQuantity={availableQuantity} />
+    </Container>
+  )
 }
 
 export default ListMedicine
