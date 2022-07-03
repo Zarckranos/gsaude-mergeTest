@@ -64,8 +64,6 @@ const ListHealthCenter = () => {
                             Resultados para {searchPhrase}
                         </ResultsText>
                     )}
-                    
-
                     <ListContainer> 
                         <FlatList
                             data={fakeData}

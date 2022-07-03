@@ -10,6 +10,10 @@ export const toastConfig = {
         fontSize: 15,
         fontWeight: '400'
       }}
+      text2Style={{
+        fontSize: 12.5,
+        // marginLeft:-20
+      }}
     />
   ),
   error: (props) => (
@@ -36,5 +40,5 @@ export const toastConfig = {
         fontSize: 12
       }}
     />
-  )
+  ),
 };
