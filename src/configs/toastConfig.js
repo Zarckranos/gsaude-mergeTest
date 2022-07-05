@@ -23,5 +23,18 @@ export const toastConfig = {
         fontSize: 15
       }}
     />
+  ),
+  warning: (props) => (
+    <ErrorToast
+      {...props}
+      text1Style={{
+        fontSize: 14,
+        fontWeight: 'normal'
+      }}
+      style={{ borderLeftColor: 'orange' }}
+      text2Style={{
+        fontSize: 12
+      }}
+    />
   )
 };
