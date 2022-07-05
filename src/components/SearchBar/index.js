@@ -1,9 +1,11 @@
 import React from "react";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 import {Container, SearchBarView, SearchInput } from "./styles";
+Bar = ({searchPhrase, setSearchFilter, shouldCrossIconShow, placeholderPhrase}) => {
 import { useEffect } from "react";
 
 const SearchBar = ({searchPhrase, setSearchFilter, shouldCrossIconShow, placeholderPhrase, goToListMedicine}) => {
+
   
   const renderCrossIcon = () => {
     return (

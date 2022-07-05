@@ -4,7 +4,7 @@ import { Entypo } from "@expo/vector-icons";
 import { Container, ListTitle, ListDistance, LocationButton } from './styles';
 import { useNavigation } from '@react-navigation/native';
 
-const ListItem = ({ data}) => {
+const ListItem = ({data}) => {
     const { name, distance } = data
     const navigation = useNavigation()
 
@@ -14,6 +14,7 @@ const ListItem = ({ data}) => {
 
     return (
         <Container onPress={goToHealthCenter}>  
+
             <ListTitle>{name}</ListTitle>
             <ListDistance>{distance}</ListDistance>
             <LocationButton>

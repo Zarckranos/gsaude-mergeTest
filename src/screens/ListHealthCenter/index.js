@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons"
+
 import ListItem from '../../components/ListItem';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Container, EmptySearch, EmptySearchText, ResultsText, ListContainer, BackButton, Header} from './styles'
@@ -8,6 +9,7 @@ import { FlatList } from "react-native";
 import jsonData from './fakeHealthCenterData.json';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import SearchBar from '../../components/SearchBar';
 
 import {
     BoxSearch,
@@ -25,8 +27,6 @@ const ListHealthCenter = () => {
         return <ListItem data={item}/>
     };
 
-    const fakeData = jsonData.filter(x => x.name.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, "")))
-
     const handleEmpty = () => {
         return (
             <EmptySearch>
@@ -39,6 +39,20 @@ const ListHealthCenter = () => {
             </EmptySearch>
         ); 
     }; 
+
+    function chooseTextResult (status, searchText) {
+        switch(status){
+          case "show" :
+            return (
+                <ResultsText>Resultados para {searchText}</ResultsText>
+            )
+          case "hide" :
+            return (
+                <ResultsText></ResultsText>
+            )
+        }
+      }
+
 
     return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -66,8 +80,9 @@ const ListHealthCenter = () => {
                     )}
                     <ListContainer> 
                         <FlatList
-                            data={fakeData}
+                            data={filteredDataSource}
                             renderItem={renderItem}
+                            keyExtractor={(item, index) => { return index.toString()}}
                             keyExtractor={(item, index) => {return index.toString()}}
                             ListEmptyComponent={handleEmpty}
                         />
