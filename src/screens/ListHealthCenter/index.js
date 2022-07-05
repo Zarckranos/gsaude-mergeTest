@@ -1,15 +1,19 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import SearchBar from '../../components/SearchBar'
+import { Feather } from "@expo/vector-icons"
 import ListItem from '../../components/ListItem';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Container, EmptySearch, EmptySearchText, ResultsText, ListContainer, BackButton, Header} from './styles'
-import styles from './styles';
-import { View, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import jsonData from './fakeHealthCenterData.json';
-import { ZoomButton } from '../../components/Minimap/styles';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
+
+import {
+    BoxSearch,
+    Input,
+    BoxIcon
+} from './styles'
 
 const ListHealthCenter = () => {
     const route = useRoute()
@@ -44,22 +48,22 @@ const ListHealthCenter = () => {
                             <MaterialIcons name="arrow-back" size={30} color="black"/>
                         </BackButton>
 
-                        <SearchBar
-                            placeholderPhrase="Pesquisar novo posto de saúde"
-                            searchPhrase={searchPhrase}
-                            // setSearchPhrase={setSearchPhrase}
-                            setSearchFilter={setSearchPhrase}
-                            clicked={clicked}
-                            setClicked={setClicked}
-                        />
+                        <BoxSearch>
+                            <Input
+                                placeholder="Pesquisar..."
+                                defaultValue={searchPhrase}
+                                onChangeText={(text) => setSearchPhrase(text)}
+                            />
+                            <BoxIcon>
+                                <Feather name="search" size={25} color="#C4C4C4" />
+                            </BoxIcon>
+                        </BoxSearch>
                     </Header>
                     {searchPhrase.length != 0 && (
                         <ResultsText>
                             Resultados para {searchPhrase}
                         </ResultsText>
                     )}
-                    
-
                     <ListContainer> 
                         <FlatList
                             data={fakeData}

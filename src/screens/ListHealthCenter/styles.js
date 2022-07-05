@@ -1,5 +1,4 @@
 import styled from "styled-components/native";
-import { KeyboardAvoidingView } from "react-native";
 
 export const Container = styled.KeyboardAvoidingView`
   flex: 1;
@@ -58,4 +57,25 @@ export const BackButton = styled.TouchableOpacity`
     display: flex;
     justify-content: center;
     align-items: center;
+`
+
+export const BoxSearch = styled.View`
+  width: 300px;
+  flex-direction: row;
+  border-radius: 5px;
+  justify-content: space-between;
+  background-color: #F5F0F0;
+`
+export const Input = styled.TextInput`
+  width: 210px;
+  height: 46px;
+  background-color: #F5F0F0;
+  padding-left: 5px;
+  border-radius: 5px;
+  font-size: 17px;
+`
+export const BoxIcon = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: flex-start;
+  width: 40px;
 `

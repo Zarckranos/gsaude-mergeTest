@@ -34,7 +34,7 @@ const Home = () => {
 
   const handleSubmit = () => {
     if(selectInput == 'medicine' && searchState.trim() != '') {
-      navigation.navigate("ListMedicine",{medicine:searchState})
+      navigation.navigate("SearchMedicine",{medicine:searchState})
 
     }else if (selectInput == 'healthCenter' && searchState.trim() != '') {
       navigation.navigate("ListHealthCenter",{healthCenter:searchState})
