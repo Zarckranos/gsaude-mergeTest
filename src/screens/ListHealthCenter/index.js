@@ -27,6 +27,8 @@ const ListHealthCenter = () => {
         return <ListItem data={item}/>
     };
 
+    const fakeData = jsonData.filter(x => x.name.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, "")))
+
     const handleEmpty = () => {
         return (
             <EmptySearch>
@@ -80,7 +82,7 @@ const ListHealthCenter = () => {
                     )}
                     <ListContainer> 
                         <FlatList
-                            data={filteredDataSource}
+                            data={fakeData}
                             renderItem={renderItem}
                             keyExtractor={(item, index) => { return index.toString()}}
                             keyExtractor={(item, index) => {return index.toString()}}
