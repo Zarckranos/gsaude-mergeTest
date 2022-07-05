@@ -1,54 +1,38 @@
-import React, {useState, useEffect} from 'react'
-import { FontAwesome } from "@expo/vector-icons";
+import React, { useState } from 'react'
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons"
+
 import ListItem from '../../components/ListItem';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Container, EmptySearch, EmptySearchText, ResultsText, ListContainer, BackButton, Header} from './styles'
-import styles from './styles';
-import { View, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import jsonData from './fakeHealthCenterData.json';
-import { ZoomButton } from '../../components/Minimap/styles';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import SearchBar from '../../components/SearchBar';
 
+import {
+    BoxSearch,
+    Input,
+    BoxIcon
+} from './styles'
+
 const ListHealthCenter = () => {
     const route = useRoute()
     const navigation = useNavigation()
-    const [search, setSearch] = useState(route.params.healthCenter);
-    const [isVisible, setIsVisible] = useState(true);
-    const [filteredDataSource, setFilteredDataSource] = useState([]);
-    const [shouldCrossIconShow, setShouldCrossIconShow] = useState(true);
-    const [textResult, setTextResult] = useState("");
-    const searchFilterFunction = (text) => {
-        if (text) {
-            const newData = jsonData.filter(function (item) {
-                const itemData = item.name ? item.name.toUpperCase().trim() : ''.toUpperCase();
-                const textData = text.toUpperCase().trim();
-                return itemData.indexOf(textData) > -1;
-            });
-            newData.length === 0 ? setIsVisible(false) : setIsVisible(true);
-            setFilteredDataSource(newData);
-            setSearch(text);
-            setShouldCrossIconShow(true);
-        } else {
-            setFilteredDataSource(jsonData);
-            setSearch(text);
-            setShouldCrossIconShow(false);
-            setIsVisible(false);
-        }
-    };
-    const renderItem = ({item}) => {
-        return ( 
-            <ListItem data={item}/>
-        );
+    const [searchPhrase, setSearchPhrase] = useState(route.params.healthCenter);
+    const [clicked, setClicked] = useState(true);
+
+    const renderItem = ({item, index}) => {
+        return <ListItem data={item}/>
     };
 
     const handleEmpty = () => {
         return (
             <EmptySearch>
-                <FontAwesome
-                    name="exclamation"
-                    size={40}
+                <MaterialCommunityIcons
+                    name="exclamation-thick"
+                    size={50}
                     color="#9C9C9C"
                 />
                 <EmptySearchText>Não foram encontrados resultados {'\n'} para sua pesquisa.</EmptySearchText>
@@ -78,21 +62,28 @@ const ListHealthCenter = () => {
                             <MaterialIcons name="arrow-back" size={30} color="black"/>
                         </BackButton>
 
-                        <SearchBar
-                            placeholderPhrase="Pesquisar novo posto de saúde"
-                            setSearchFilter={searchFilterFunction}
-                            searchPhrase={search}
-                            shouldCrossIconShow={shouldCrossIconShow}
-                        />
+                        <BoxSearch>
+                            <Input
+                                placeholder="Pesquisar..."
+                                defaultValue={searchPhrase}
+                                onChangeText={(text) => setSearchPhrase(text)}
+                            />
+                            <BoxIcon>
+                                <Feather name="search" size={25} color="#C4C4C4" />
+                            </BoxIcon>
+                        </BoxSearch>
                     </Header>
-                
-                    {isVisible ? chooseTextResult("show", search) : chooseTextResult("hide")}
-                    
+                    {searchPhrase.length != 0 && (
+                        <ResultsText>
+                            Resultados para {searchPhrase}
+                        </ResultsText>
+                    )}
                     <ListContainer> 
                         <FlatList
                             data={filteredDataSource}
                             renderItem={renderItem}
                             keyExtractor={(item, index) => { return index.toString()}}
+                            keyExtractor={(item, index) => {return index.toString()}}
                             ListEmptyComponent={handleEmpty}
                         />
                     </ListContainer> 

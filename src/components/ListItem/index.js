@@ -8,12 +8,13 @@ const ListItem = ({data}) => {
     const { name, distance } = data
     const navigation = useNavigation()
 
-    const gotToHealthCenter= () => {
+    const goToHealthCenter = () => {
         navigation.navigate("HealthCenter")
     }
-    
+
     return (
-        <Container onPress={gotToHealthCenter}> 
+        <Container onPress={goToHealthCenter}>  
+
             <ListTitle>{name}</ListTitle>
             <ListDistance>{distance}</ListDistance>
             <LocationButton>

@@ -39,7 +39,6 @@ const Fullmap = () => {
         style={{width: width, height: height, zIndex:0}}
         zoomEnabled={true}
         minZoomLevel={17}
-        showsUserLocation={true}
       >
         <Marker coordinate={data.coords}/>
       </MapView>
